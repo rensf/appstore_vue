@@ -1,5 +1,23 @@
 <style lang="less" scoped>
 @import "../../styles/common.less";
+.upload-icon {
+    display: inline-block;
+    width: 58px;
+    .upload-icon-icon {
+        width: 58px;
+        height: 58px;
+        line-height: 58px;
+    }
+}
+.upload-image {
+    display: inline-block;
+    width: 75px;
+    .upload-image-icon {
+        width: 75px;
+        height: 160px;
+        line-height: 160px;
+    }
+}
 </style>
 
 <template>
@@ -25,9 +43,16 @@
                     </FormItem>
                 </Form>
                 <!-- 弹出框 -->
-                <Modal title="添加应用" v-model="showAdd">
+                <Modal
+                    :styles="{top: '60px'}"
+                    title="添加应用"
+                    v-model="showAdd"
+                    width="40"
+                    :mask-closable="false"
+                    @on-cancel="cancelAdd()"
+                >
                     <Form
-                        class="addForm"
+                        style="width: 500px;"
                         ref="addForm"
                         :model="addForm"
                         :rules="addFormRule"
@@ -37,8 +62,32 @@
                         <FormItem label="APP名称：" prop="appname">
                             <Input type="text" v-model="addForm.appname" placeholder="请输入APP名称..."></Input>
                         </FormItem>
-                        <FormItem></FormItem>
-                        <FormItem></FormItem>
+                        <FormItem label="APP描述：" prop="appdetail">
+                            <Input
+                                type="textarea"
+                                v-model="addForm.appdetail"
+                                placeholder="请输入APP描述..."
+                            ></Input>
+                        </FormItem>
+                        <FormItem label="APP图标：" prop="appicon">
+                            <Upload
+                                class="upload-icon"
+                                type="drag"
+                                action="/api/td-sys-app/uploadImage"
+                            >
+                                <Icon class="upload-icon-icon" type="md-camera"></Icon>
+                            </Upload>
+                        </FormItem>
+                        <FormItem label="APP上传：" prop="apppath">
+                            <Upload action="">
+                                <Button type="dashed" icon="ios-cloud-upload-outline">上传</Button>
+                            </Upload>
+                        </FormItem>
+                        <FormItem label="APP图片：" prop="appphoto">
+                            <Upload class="upload-image" type="drag" action="">
+                                <Icon class="upload-image-icon" type="md-add"></Icon>
+                            </Upload>
+                        </FormItem>
                     </Form>
                     <div slot="footer">
                         <Button @click="cancelAdd()">取消</Button>
