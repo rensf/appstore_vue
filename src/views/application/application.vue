@@ -70,21 +70,28 @@
                             ></Input>
                         </FormItem>
                         <FormItem label="APP图标：" prop="appicon">
-                            <Upload
-                                class="upload-icon"
-                                type="drag"
-                                action="/api/td-sys-app/uploadImage"
-                            >
-                                <Icon class="upload-icon-icon" type="md-camera"></Icon>
-                            </Upload>
+                            <div style="display: flex">
+                                <Upload
+                                    class="upload-icon"
+                                    type="drag"
+                                    action="/api/td-sys-app/uploadImage"
+                                    accept=".jpg, .jpeg, .png"
+                                    :format="['jpg','jpeg','png']"
+                                    :show-upload-list="false"
+                                    :on-success="uploadAppicon"
+                                >
+                                    <Icon class="upload-icon-icon" type="md-camera"></Icon>
+                                </Upload>
+                                <Input v-model="addForm.appicon" type="hidden"></Input>
+                            </div>
                         </FormItem>
                         <FormItem label="APP上传：" prop="apppath">
-                            <Upload action="">
+                            <Upload action>
                                 <Button type="dashed" icon="ios-cloud-upload-outline">上传</Button>
                             </Upload>
                         </FormItem>
                         <FormItem label="APP图片：" prop="appphoto">
-                            <Upload class="upload-image" type="drag" action="">
+                            <Upload class="upload-image" type="drag" action>
                                 <Icon class="upload-image-icon" type="md-add"></Icon>
                             </Upload>
                         </FormItem>
@@ -117,6 +124,9 @@ export default {
         cancelAdd() {
             this.showAdd = false;
             this.$refs["addForm"].resetFields();
+        },
+        uploadAppicon(res) {
+            this.addForm.appicon = res;
         }
     }
 };
