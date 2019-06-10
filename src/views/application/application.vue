@@ -1,12 +1,30 @@
 <style lang="less" scoped>
 @import "../../styles/common.less";
+.upload-list {
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    text-align: center;
+    line-height: 75px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    margin-right: 4px;
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
 .upload-icon {
     display: inline-block;
-    width: 58px;
+    width: 75px;
     .upload-icon-icon {
-        width: 58px;
-        height: 58px;
-        line-height: 58px;
+        width: 75px;
+        height: 75px;
+        line-height: 75px;
     }
 }
 .upload-image {
@@ -17,6 +35,9 @@
         height: 160px;
         line-height: 160px;
     }
+}
+.upload-input {
+    display: none;
 }
 </style>
 
@@ -71,27 +92,39 @@
                         </FormItem>
                         <FormItem label="APP图标：" prop="appicon">
                             <div style="display: flex">
+                                <div class="upload-list" v-for="item in appiconList">
+                                    <img :src="item.url">
+                                </div>
                                 <Upload
                                     class="upload-icon"
                                     type="drag"
-                                    action="/api/td-sys-app/uploadImage"
+                                    action="/api/td-sys-app/uploadApp"
                                     accept=".jpg, .jpeg, .png"
                                     :format="['jpg','jpeg','png']"
                                     :show-upload-list="false"
+                                    :before-upload="handleBeforeUpload"
+                                    :on-format-error="handleFormatError"
                                     :on-success="uploadAppicon"
                                 >
                                     <Icon class="upload-icon-icon" type="md-camera"></Icon>
                                 </Upload>
-                                <Input v-model="addForm.appicon" type="hidden"></Input>
+                                <Input class="upload-input" v-model="addForm.appicon"></Input>
                             </div>
                         </FormItem>
                         <FormItem label="APP上传：" prop="apppath">
-                            <Upload action>
+                            <Upload action="/api/td-sys-app/uploadApp">
                                 <Button type="dashed" icon="ios-cloud-upload-outline">上传</Button>
                             </Upload>
                         </FormItem>
                         <FormItem label="APP图片：" prop="appphoto">
-                            <Upload class="upload-image" type="drag" action>
+                            <Upload
+                                class="upload-image"
+                                type="drag"
+                                action="/api/td-sys-app/uploadApp"
+                                accept=".jpg, .jpeg, .png"
+                                :format="['jpg','jpeg','png']"
+                                :show-upload-list="false"
+                            >
                                 <Icon class="upload-image-icon" type="md-add"></Icon>
                             </Upload>
                         </FormItem>
@@ -113,7 +146,8 @@ export default {
             showAdd: false,
             queryForm: {},
             addForm: {},
-            addFormRule: {}
+            addFormRule: {},
+            appiconList: {}
         };
     },
     methods: {
@@ -125,9 +159,28 @@ export default {
             this.showAdd = false;
             this.$refs["addForm"].resetFields();
         },
+        handleBeforeUploadIcon() {
+            const iconMax = this.appiconList.length <= 1;
+            if (!iconMax) {
+                this.$Notice.warning({
+                    title: "只可以上传一个APP图标"
+                });
+            }
+        },
+        handleFormatError(file) {
+            this.$Notice.warning({
+                title: "文件格式错误",
+                desc: file.name + "文件格式错误，请选择.jpg或.png格式的文件。"
+            });
+        },
         uploadAppicon(res) {
             this.addForm.appicon = res;
-        }
+            this.appiconList.push({
+                url: "/api/td-sys-app/preview/" + res
+            });
+        },
+        uploadApp() {},
+        uploadAppimage() {}
     }
 };
 </script>
