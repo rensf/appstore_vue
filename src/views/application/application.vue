@@ -1,6 +1,6 @@
 <style lang="less" scoped>
 @import "../../styles/common.less";
-.upload-list {
+.upload-icon-list {
     display: inline-block;
     width: 75px;
     height: 75px;
@@ -25,6 +25,24 @@
         width: 75px;
         height: 75px;
         line-height: 75px;
+    }
+}
+.upload-image-list {
+    display: inline-block;
+    width: 75px;
+    height: 160px;
+    text-align: center;
+    line-height: 160px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    margin-right: 4px;
+    img {
+        width: 100%;
+        height: 100%;
     }
 }
 .upload-image {
@@ -68,12 +86,12 @@
                     :styles="{top: '60px'}"
                     title="添加应用"
                     v-model="showAdd"
-                    width="40"
+                    width="45"
                     :mask-closable="false"
                     @on-cancel="cancelAdd()"
                 >
                     <Form
-                        style="width: 500px;"
+                        style="width: 575px;"
                         ref="addForm"
                         :model="addForm"
                         :rules="addFormRule"
@@ -91,19 +109,21 @@
                             ></Input>
                         </FormItem>
                         <FormItem label="APP图标：" prop="appicon">
-                            <div style="display: flex">
-                                <div class="upload-list" v-for="item in appiconList">
+                            <div style="display: flex;">
+                                <div class="upload-icon-list" v-for="item in appiconList">
                                     <img :src="item.url">
                                 </div>
                                 <Upload
                                     class="upload-icon"
                                     type="drag"
+                                    :max-size="100"
                                     action="/api/td-sys-app/uploadApp"
                                     accept=".jpg, .jpeg, .png"
                                     :format="['jpg','jpeg','png']"
                                     :show-upload-list="false"
-                                    :before-upload="handleBeforeUpload"
+                                    :before-upload="handleBeforeUploadIcon"
                                     :on-format-error="handleFormatError"
+                                    :on-exceeded-size="handleMaxSize"
                                     :on-success="uploadAppicon"
                                 >
                                     <Icon class="upload-icon-icon" type="md-camera"></Icon>
@@ -117,16 +137,25 @@
                             </Upload>
                         </FormItem>
                         <FormItem label="APP图片：" prop="appphoto">
-                            <Upload
-                                class="upload-image"
-                                type="drag"
-                                action="/api/td-sys-app/uploadApp"
-                                accept=".jpg, .jpeg, .png"
-                                :format="['jpg','jpeg','png']"
-                                :show-upload-list="false"
-                            >
-                                <Icon class="upload-image-icon" type="md-add"></Icon>
-                            </Upload>
+                            <div style="display: flex">
+                                <div class="upload-image-list" v-for="item in appimageList">
+                                    <img :src="item.url">
+                                </div>
+                                <Upload
+                                    class="upload-image"
+                                    type="drag"
+                                    multiple
+                                    action="/api/td-sys-app/uploadApp"
+                                    accept=".jpg, .jpeg, .png"
+                                    :format="['jpg','jpeg','png']"
+                                    :show-upload-list="false"
+                                    :before-upload="handleBeforeUploadImage"
+                                    :on-format-error="handleFormatError"
+                                    :on-success="uploadAppimage"
+                                >
+                                    <Icon class="upload-image-icon" type="md-add"></Icon>
+                                </Upload>
+                            </div>
                         </FormItem>
                     </Form>
                     <div slot="footer">
@@ -147,7 +176,8 @@ export default {
             queryForm: {},
             addForm: {},
             addFormRule: {},
-            appiconList: {}
+            appiconList: [],
+            appimageList: []
         };
     },
     methods: {
@@ -158,14 +188,17 @@ export default {
         cancelAdd() {
             this.showAdd = false;
             this.$refs["addForm"].resetFields();
+            this.appiconList = [];
+            this.appimageList = [];
         },
         handleBeforeUploadIcon() {
-            const iconMax = this.appiconList.length <= 1;
+            const iconMax = this.appiconList.length < 1;
             if (!iconMax) {
                 this.$Notice.warning({
                     title: "只可以上传一个APP图标"
                 });
             }
+            return iconMax;
         },
         handleFormatError(file) {
             this.$Notice.warning({
@@ -173,14 +206,33 @@ export default {
                 desc: file.name + "文件格式错误，请选择.jpg或.png格式的文件。"
             });
         },
+        handleMaxSize(file) {
+            this.$Notice.warning({
+                title: "超出文件大小限制",
+                desc: file.name + "太大，请不要超过100KB。"
+            });
+        },
         uploadAppicon(res) {
             this.addForm.appicon = res;
             this.appiconList.push({
-                url: "/api/td-sys-app/preview/" + res
+                url: "/api/td-sys-app/previewAppImage/" + res
             });
         },
+        handleBeforeUploadImage() {
+            const imageMax = this.appimageList.length < 5;
+            if (!imageMax) {
+                this.$Notice.warning({
+                    title: "最多可以上传5张图片"
+                });
+            }
+            return imageMax;
+        },
         uploadApp() {},
-        uploadAppimage() {}
+        uploadAppimage(res) {
+            this.appimageList.push({
+                url: "/api/td-sys-app/previewAppImage/" + res
+            });
+        }
     }
 };
 </script>
