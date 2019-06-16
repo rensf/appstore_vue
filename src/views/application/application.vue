@@ -81,7 +81,11 @@
                         <Button>重置</Button>
                     </FormItem>
                 </Form>
-                <!-- 弹出框 -->
+
+                <!-- 展示 -->
+                <Table></Table>
+
+                <!-- 添加弹出框 -->
                 <Modal
                     :styles="{top: '60px'}"
                     title="添加应用"
@@ -116,7 +120,7 @@
                                 <Upload
                                     class="upload-icon"
                                     type="drag"
-                                    :max-size="100"
+                                    :max-size="2048"
                                     action="/api/td-sys-app/uploadApp"
                                     accept=".jpg, .jpeg, .png"
                                     :format="['jpg','jpeg','png']"
@@ -132,9 +136,18 @@
                             </div>
                         </FormItem>
                         <FormItem label="APP上传：" prop="apppath">
-                            <Upload action="/api/td-sys-app/uploadApp">
+                            <Upload
+                                action="/api/td-sys-app/uploadApp"
+                                accept=".apk"
+                                :format="['apk']"
+                                :show-upload-list="false"
+                                :before-upload="handleBeforeUploadApp"
+                                :on-format-error="handleAppFormatError"
+                                :on-success="uploadApp"
+                            >
                                 <Button type="dashed" icon="ios-cloud-upload-outline">上传</Button>
                             </Upload>
+                            <Input class="upload-input" v-model="addForm.apppath"></Input>
                         </FormItem>
                         <FormItem label="APP图片：" prop="appphoto">
                             <div style="display: flex">
@@ -159,8 +172,8 @@
                         </FormItem>
                     </Form>
                     <div slot="footer">
-                        <Button @click="cancelAdd()">取消</Button>
-                        <Button type="primary">确定</Button>
+                        <Button @click="cancelAdd">取消</Button>
+                        <Button type="primary" @click="confirmAdd">确定</Button>
                     </div>
                 </Modal>
             </div>
@@ -177,7 +190,10 @@ export default {
             addForm: {},
             addFormRule: {},
             appiconList: [],
-            appimageList: []
+            appList: [],
+            appimageList: [],
+            columns: [],
+            apps: []
         };
     },
     methods: {
@@ -218,6 +234,26 @@ export default {
                 url: "/api/td-sys-app/previewAppImage/" + res
             });
         },
+        handleBeforeUploadApp() {
+            const appMax = this.appList.length < 1;
+            if (!appMax) {
+                this.$Notice.warning({
+                    title: "最多可以上传一个文件"
+                });
+            }
+        },
+        handleAppFormatError(file) {
+            this.$Notice.warning({
+                title: "文件格式错误",
+                desc: file.name + "文件格式错误，请选择.apk格式的文件。"
+            });
+        },
+        uploadApp(res) {
+            this.addForm.apppath = res;
+            this.appList.push({
+                value: res
+            });
+        },
         handleBeforeUploadImage() {
             const imageMax = this.appimageList.length < 5;
             if (!imageMax) {
@@ -227,11 +263,30 @@ export default {
             }
             return imageMax;
         },
-        uploadApp() {},
         uploadAppimage(res) {
             this.appimageList.push({
-                url: "/api/td-sys-app/previewAppImage/" + res
+                url: "/api/td-sys-app/previewAppImage/" + res,
+                value: res
             });
+        },
+        confirmAdd() {
+            this.appimageList.forEach((item, index) => {
+                this.addForm["picture" + (index + 1)] = item.value;
+            });
+            console.log(this.addForm);
+            this.postRequest("/td-sys-app/addApp", this.addForm).then(
+                response => {
+                    if (response === 1) {
+                        this.$Notice.success({
+                            title: "操作成功！"
+                        });
+                        this.showAdd = false;
+                        this.$refs["addForm"].resetFields();
+                        this.appiconList = [];
+                        this.appimageList = [];
+                    }
+                }
+            );
         }
     }
 };
