@@ -273,10 +273,7 @@ export default {
                                     style: { margin: "0 3px" },
                                     on: {
                                         click: () => {
-                                            this.delete(
-                                                params.row,
-                                                params.index
-                                            );
+                                            this.delete(params.row, params.index);
                                         }
                                     }
                                 },
@@ -408,15 +405,16 @@ export default {
             this.pictureList = [];
         },
         delete(v, index) {
+            console.log(v)
             this.$Modal.confirm({
                 title: "确认删除",
                 content: "您确认要删除该记录吗?",
                 onOk: () => {
-                    this.postRequest("/api/td-sys-app/delApp", v).then(
+                    this.postRequest("/td-sys-app/delApp", v).then(
                         response => {
                             if (response.data === 1) {
                                 // 成功删除数据
-                                this.columns.splice(index, 1);
+                                this.apps.splice(index, 1);
                                 this.$Notice.success({
                                     title: "提示",
                                     desc: "操作成功！"
