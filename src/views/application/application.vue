@@ -83,7 +83,7 @@
                 </Form>
 
                 <!-- 展示 -->
-                <Table></Table>
+                <Table :columns="columns" :data="apps" border></Table>
 
                 <!-- 添加弹出框 -->
                 <Modal
@@ -176,6 +176,23 @@
                         <Button type="primary" @click="confirmAdd">确定</Button>
                     </div>
                 </Modal>
+
+                <Modal
+                    title="上架图展示"
+                    v-model="showPicture"
+                    @on-cancel="closePicture"
+                    :mask-closable="false"
+                    :footer-hide="true"
+                    width="274"
+                >
+                    <div>
+                        <Carousel style="width: 240px;height: 414px;">
+                            <CarouselItem v-for="item in pictureList" :key="item.url">
+                                <img :src="item.url" style="width: 240px;height: 414px;">
+                            </CarouselItem>
+                        </Carousel>
+                    </div>
+                </Modal>
             </div>
         </Card>
     </div>
@@ -186,18 +203,107 @@ export default {
     data() {
         return {
             showAdd: false,
-            queryForm: {},
+            queryForm: {
+                total: 0,
+                current: 1,
+                size: 10
+            },
             addForm: {},
             addFormRule: {},
             appiconList: [],
             appList: [],
             appimageList: [],
-            columns: [],
-            apps: []
+            columns: [
+                {
+                    title: "APP名称",
+                    align: "center",
+                    key: "appname",
+                    width: 150
+                },
+                {
+                    title: "APP图标",
+                    align: "center",
+                    key: "appicon",
+                    render: (h, params) => {
+                        return h("img", {
+                            style: {
+                                width: "48px",
+                                height: "48px",
+                                "margin-top": "5px"
+                            },
+                            attrs: {
+                                src:
+                                    "/api/td-sys-app/previewAppImage/" +
+                                    params.row.appicon
+                            }
+                        });
+                    },
+                    width: 100
+                },
+                { title: "APP描述", align: "center", key: "appdetail" },
+                {
+                    title: "操作",
+                    align: "center",
+                    key: "action",
+                    render: (h, params) => {
+                        return h("div", [
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "primary",
+                                        size: "small"
+                                    },
+                                    style: { margin: "0 3px" },
+                                    on: {
+                                        click: () => {
+                                            this.handleShowPicture(params.row);
+                                        }
+                                    }
+                                },
+                                "查看图片"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small"
+                                    },
+                                    style: { margin: "0 3px" },
+                                    on: {
+                                        click: () => {
+                                            this.delete(
+                                                params.row,
+                                                params.index
+                                            );
+                                        }
+                                    }
+                                },
+                                "删除"
+                            )
+                        ]);
+                    },
+                    width: 250
+                }
+            ],
+            apps: [],
+            showPicture: false,
+            pictureList: []
         };
     },
     methods: {
-        query() {},
+        init() {
+            this.query();
+        },
+        query() {
+            this.postRequest("/td-sys-app/queryApp", this.queryForm).then(
+                response => {
+                    this.apps = response.data.records;
+                    this.queryForm.total = response.data.total;
+                }
+            );
+        },
         handleAdd() {
             this.showAdd = true;
         },
@@ -273,10 +379,9 @@ export default {
             this.appimageList.forEach((item, index) => {
                 this.addForm["picture" + (index + 1)] = item.value;
             });
-            console.log(this.addForm);
             this.postRequest("/td-sys-app/addApp", this.addForm).then(
                 response => {
-                    if (response === 1) {
+                    if (response.data === 1) {
                         this.$Notice.success({
                             title: "操作成功！"
                         });
@@ -287,7 +392,44 @@ export default {
                     }
                 }
             );
+        },
+        handleShowPicture(v) {
+            this.showPicture = true;
+            for (let index = 1; index <= 5; index++) {
+                this.pictureList.push({
+                    url:
+                        "/api/td-sys-app/previewAppImage/" +
+                        v["picture" + index]
+                });
+            }
+        },
+        closePicture() {
+            this.showPicture = false;
+            this.pictureList = [];
+        },
+        delete(v, index) {
+            this.$Modal.confirm({
+                title: "确认删除",
+                content: "您确认要删除该记录吗?",
+                onOk: () => {
+                    this.postRequest("/api/td-sys-app/delApp", v).then(
+                        response => {
+                            if (response.data === 1) {
+                                // 成功删除数据
+                                this.columns.splice(index, 1);
+                                this.$Notice.success({
+                                    title: "提示",
+                                    desc: "操作成功！"
+                                });
+                            }
+                        }
+                    );
+                }
+            });
         }
+    },
+    mounted() {
+        this.init();
     }
 };
 </script>
