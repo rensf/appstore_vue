@@ -61,7 +61,7 @@ export default {
                         //将权限配置存入本地缓存
                         // this.$store.commit('setMenuConfig', JSON.stringify(data.menuinfos));
                         //初始化路由
-                        this.util.initRouter(this);
+                        // this.util.initRouter(this);
                         Cookies.set('adminid', response.data.adminid);
                         Cookies.set('adminname', response.data.adminname);
                         this.$store.commit('setAvator', '../src/images/head.jpg');

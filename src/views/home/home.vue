@@ -35,7 +35,7 @@
                             </Row>
                         </Card>
                     </Col>
-                    <Col :md="12" :lg="24" :style="{marginBottom: '10px'}">
+                    <!-- <Col :md="12" :lg="24" :style="{marginBottom: '10px'}">
                         <Card>
                             <p slot="title" class="card-title">
                                 <Icon type="md-checkbox-outline"></Icon>
@@ -63,6 +63,14 @@
                                 </div>
                             </div>
                         </Card>
+                    </Col> -->
+                    <Col :md="12" :lg="24" :style="{marginBottom: '10px'}">
+                        <Card>
+                            <p slot="title" class="card-title">
+                                <Icon type="md-podium"></Icon>
+                                APP排行榜
+                            </p>
+                        </Card>
                     </Col>
                 </Row>
             </Col>
@@ -87,7 +95,7 @@
                             intro-text="今日浏览量"
                         ></infor-card>
                     </Col>
-                    <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
+                    <!-- <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="collection_count"
                             :end-val="count.collection"
@@ -104,7 +112,7 @@
                             color="#f25e43"
                             intro-text="今日服务调用量"
                         ></infor-card>
-                    </Col>
+                    </Col> -->
                 </Row>
                 <Row>
                     <Card :padding="0">
@@ -126,7 +134,7 @@
                 </Row>
             </Col>
         </Row>
-        <Row :gutter="10" class="margin-top-10">
+        <!-- <Row :gutter="10" class="margin-top-10">
             <Col :md="24" :lg="8" :style="{marginBottom: '10px'}">
                 <Card>
                     <p slot="title" class="card-title">
@@ -171,7 +179,7 @@
                     <service-requests></service-requests>
                 </div>
             </Card>
-        </Row>
+        </Row> -->
     </div>
 </template>
 
