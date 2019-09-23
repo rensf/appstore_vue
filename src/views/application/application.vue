@@ -115,7 +115,7 @@
                         <FormItem label="APP图标：" prop="appicon">
                             <div style="display: flex;">
                                 <div class="upload-icon-list" v-for="item in appiconList">
-                                    <img :src="item.url">
+                                    <img :src="item.url" />
                                 </div>
                                 <Upload
                                     class="upload-icon"
@@ -152,7 +152,7 @@
                         <FormItem label="APP图片：" prop="appphoto">
                             <div style="display: flex">
                                 <div class="upload-image-list" v-for="item in appimageList">
-                                    <img :src="item.url">
+                                    <img :src="item.url" />
                                 </div>
                                 <Upload
                                     class="upload-image"
@@ -188,7 +188,7 @@
                     <div>
                         <Carousel style="width: 240px;height: 414px;">
                             <CarouselItem v-for="item in pictureList" :key="item.url">
-                                <img :src="item.url" style="width: 240px;height: 414px;">
+                                <img :src="item.url" style="width: 240px;height: 414px;" />
                             </CarouselItem>
                         </Carousel>
                     </div>
@@ -266,6 +266,14 @@ export default {
                             h(
                                 "Button",
                                 {
+                                    props: { type: "warning", size: "small" },
+                                    style: { margin: "0 3px" }
+                                },
+                                "下载"
+                            ),
+                            h(
+                                "Button",
+                                {
                                     props: {
                                         type: "error",
                                         size: "small"
@@ -273,7 +281,10 @@ export default {
                                     style: { margin: "0 3px" },
                                     on: {
                                         click: () => {
-                                            this.delete(params.row, params.index);
+                                            this.delete(
+                                                params.row,
+                                                params.index
+                                            );
                                         }
                                     }
                                 },
@@ -386,6 +397,7 @@ export default {
                         this.$refs["addForm"].resetFields();
                         this.appiconList = [];
                         this.appimageList = [];
+                        this.query();
                     }
                 }
             );
@@ -393,11 +405,13 @@ export default {
         handleShowPicture(v) {
             this.showPicture = true;
             for (let index = 1; index <= 5; index++) {
-                this.pictureList.push({
-                    url:
-                        "/api/td-sys-app/previewAppImage/" +
-                        v["picture" + index]
-                });
+                if (v["picture" + index] !== undefined) {
+                    this.pictureList.push({
+                        url:
+                            "/api/td-sys-app/previewAppImage/" +
+                            v["picture" + index]
+                    });
+                }
             }
         },
         closePicture() {
@@ -405,23 +419,21 @@ export default {
             this.pictureList = [];
         },
         delete(v, index) {
-            console.log(v)
+            console.log(v);
             this.$Modal.confirm({
                 title: "确认删除",
                 content: "您确认要删除该记录吗?",
                 onOk: () => {
-                    this.postRequest("/td-sys-app/delApp", v).then(
-                        response => {
-                            if (response.data === 1) {
-                                // 成功删除数据
-                                this.apps.splice(index, 1);
-                                this.$Notice.success({
-                                    title: "提示",
-                                    desc: "操作成功！"
-                                });
-                            }
+                    this.postRequest("/td-sys-app/delApp", v).then(response => {
+                        if (response.data === 1) {
+                            // 成功删除数据
+                            this.apps.splice(index, 1);
+                            this.$Notice.success({
+                                title: "提示",
+                                desc: "操作成功！"
+                            });
                         }
-                    );
+                    });
                 }
             });
         }
