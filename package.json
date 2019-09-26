@@ -18,13 +18,13 @@
   "license": "MIT",
   "dependencies": {
     "area-data": "^1.0.0",
-    "axios": "^0.17.1",
+    "axios": "^0.18.1",
     "clipboard": "^1.7.1",
     "countup": "^1.8.2",
     "cropperjs": "^1.2.2",
     "echarts": "^3.8.5",
     "html2canvas": "^0.5.0-beta4",
-    "iview": "^3.2.1",
+    "iview": "^3.4.0",
     "iview-area": "^1.6.0",
     "js-cookie": "^2.2.0",
     "rasterizehtml": "^1.2.4",
@@ -54,7 +54,7 @@
     "css-hot-loader": "^1.3.5",
     "css-loader": "^0.28.8",
     "ejs-loader": "^0.3.0",
-    "eslint": "^4.15.0",
+    "eslint": "^4.18.2",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-html": "^4.0.1",
     "eslint-plugin-import": "^2.8.0",
@@ -79,7 +79,7 @@
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.10.1",
+    "webpack-dev-server": "^3.1.11",
     "webpack-merge": "^4.1.1",
     "webpack-uglify-parallel": "^0.1.4"
   }

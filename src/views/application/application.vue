@@ -267,7 +267,12 @@ export default {
                                 "Button",
                                 {
                                     props: { type: "warning", size: "small" },
-                                    style: { margin: "0 3px" }
+                                    style: { margin: "0 3px" },
+                                    on: {
+                                        click: () => {
+
+                                        }
+                                    }
                                 },
                                 "下载"
                             ),
@@ -436,6 +441,9 @@ export default {
                     });
                 }
             });
+        },
+        download(v, index) {
+            
         }
     },
     mounted() {
