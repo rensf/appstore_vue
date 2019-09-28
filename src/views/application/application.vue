@@ -242,6 +242,12 @@ export default {
                 },
                 { title: "APP描述", align: "center", key: "appdetail" },
                 {
+                    title: "下载量",
+                    align: "center",
+                    key: "appdown",
+                    width: 100
+                },
+                {
                     title: "操作",
                     align: "center",
                     key: "action",
@@ -269,9 +275,7 @@ export default {
                                     props: { type: "warning", size: "small" },
                                     style: { margin: "0 3px" },
                                     on: {
-                                        click: () => {
-
-                                        }
+                                        click: () => {}
                                     }
                                 },
                                 "下载"
@@ -442,9 +446,7 @@ export default {
                 }
             });
         },
-        download(v, index) {
-            
-        }
+        download(v, index) {}
     },
     mounted() {
         this.init();
