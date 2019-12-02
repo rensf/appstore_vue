@@ -3,13 +3,7 @@
 </style>
 <template>
     <div>
-        <Card>
-            <!-- 头部 -->
-            <div slot="title">
-                <p class="p-title">
-                    <Icon type="md-remove"></Icon>用户管理
-                </p>
-            </div>
+        <Card title="用户管理">
             <!-- 内容 -->
             <div>
                 <!-- 查询用户 -->
@@ -27,6 +21,8 @@
                     </FormItem>
                     <FormItem>
                         <Button type="primary" @click="query()">查询</Button>
+                    </FormItem>
+                    <FormItem>
                         <Button @click="cancelQuery()">重置</Button>
                     </FormItem>
                 </Form>

@@ -61,24 +61,19 @@
 
 <template>
     <div>
-        <Card>
-            <!-- 头部 -->
-            <div slot="title">
-                <p class="p-title">
-                    <Icon type="md-remove"></Icon>应用管理
-                    <Button type="primary" @click="handleAdd()">添加应用</Button>
-                </p>
-            </div>
+        <Card title="应用管理">
             <!-- 内容 -->
             <div>
                 <!-- 查询应用 -->
-                <Form class="queryForm" ref="queryForm" :model="queryForm" inline>
+                <Form ref="queryForm" :model="queryForm" inline>
                     <FormItem prop="appname">
                         <Input type="text" placeholder="请输入APP名称..." v-model="queryForm.appname"></Input>
                     </FormItem>
                     <FormItem>
                         <Button type="primary" @click="query()">查询</Button>
-                        <Button>重置</Button>
+                    </FormItem>
+                    <FormItem class="queryForm-btn">
+                        <Button type="primary" @click="handleAdd()">添加应用</Button>
                     </FormItem>
                 </Form>
 

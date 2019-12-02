@@ -1,11 +1,11 @@
 import Vue from 'vue';
-import iView from 'iview';
+import ViewUI from 'view-design';
 import {router} from './router/index';
 import {appRouter} from './router/router';
 import store from './store';
 import App from './app.vue';
 import '@/locale';
-import 'iview/dist/styles/iview.css';
+import 'view-design/dist/styles/iview.css';
 import VueI18n from 'vue-i18n';
 import util from './libs/util';
 import {postRequest,getRequest,openUrl} from './api/api';
@@ -13,7 +13,7 @@ import iviewArea from 'iview-area';
 import Cookies from 'js-cookie';
 
 Vue.use(VueI18n);
-Vue.use(iView);
+Vue.use(ViewUI);
 Vue.use(iviewArea);
 Vue.prototype.postRequest = postRequest;  //axios post
 Vue.prototype.getRequest = getRequest;  //axios get
