@@ -10,15 +10,15 @@
                     <Col :md="12" :lg="24" :style="{marginBottom: '10px'}">
                         <Card>
                             <Row type="flex" class="user-infor">
-                                <Col span="8">
+                                <Col span="12">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
                                         <img class="avator-img" :src="avatorPath" />
                                     </Row>
                                 </Col>
-                                <Col span="16" style="padding-left:6px;">
+                                <Col span="12" style="padding-left:6px;">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
                                         <div>
-                                            <b class="card-user-infor-name">Admin</b>
+                                            <b class="card-user-infor-name">{{ Cookies.get('adminname') }}</b>
                                             <p>super admin</p>
                                         </div>
                                     </Row>
@@ -26,12 +26,12 @@
                             </Row>
                             <div class="line-gray"></div>
                             <Row class="margin-top-8">
-                                <Col span="8"><p class="notwrap">上次登录时间:</p></Col>
-                                <Col span="16" class="padding-left-8">2017.09.12-13:32:20</Col>
+                                <Col span="12"><p class="notwrap login-info">登录时间:</p></Col>
+                                <Col span="12" class="padding-left-8">2017.09.12-13:32:20</Col>
                             </Row>
                             <Row class="margin-top-8">
-                                <Col span="8"><p class="notwrap">上次登录地点:</p></Col>
-                                <Col span="16" class="padding-left-8">北京</Col>
+                                <Col span="12"><p class="notwrap login-info">登录地点:</p></Col>
+                                <Col span="12" class="padding-left-8">北京</Col>
                             </Row>
                         </Card>
                     </Col>
@@ -65,11 +65,14 @@
                         </Card>
                     </Col> -->
                     <Col :md="12" :lg="24" :style="{marginBottom: '10px'}">
-                        <Card>
-                            <p slot="title" class="card-title">
-                                <Icon type="md-podium"></Icon>
-                                APP排行榜
-                            </p>
+                        <Card title="APP排行榜" icon="md-podium">
+                            <Row>
+                                <Col :span="6">
+                                    <div class="order-no">1</div>
+                                </Col>
+                                <Col :span="12">1111</Col>
+                                <Col :span="6">1111</Col>
+                            </Row>
                         </Card>
                     </Col>
                 </Row>
@@ -114,7 +117,7 @@
                         ></infor-card>
                     </Col> -->
                 </Row>
-                <Row>
+                <!-- <Row>
                     <Card :padding="0">
                         <p slot="title" class="card-title">
                             <Icon type="md-map"></Icon>
@@ -131,7 +134,7 @@
                             </Col>
                         </div>
                     </Card>
-                </Row>
+                </Row> -->
             </Col>
         </Row>
         <!-- <Row :gutter="10" class="margin-top-10">

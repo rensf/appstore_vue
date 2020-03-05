@@ -3,7 +3,6 @@
         <Dropdown trigger="click" @on-click="setTheme">
             <a href="javascript:void(0)">
                 <Icon :style="{marginTop: '-2px', verticalAlign: 'middle'}" color="#495060" :size="18" type="md-color-fill"></Icon>
-                <Icon type="md-arrow-dropdown"></Icon>
             </a>
             <DropdownMenu slot="list">
                 <DropdownItem v-for="(item, index) in themeList" :key="index" :name="item.name">

@@ -79,6 +79,10 @@
 
                 <!-- 展示 -->
                 <Table :columns="columns" :data="apps" border></Table>
+                <br>
+
+                <!-- 分页 -->
+                <Page ></Page>
 
                 <!-- 添加弹出框 -->
                 <Modal

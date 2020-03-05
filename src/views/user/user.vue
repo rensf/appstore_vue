@@ -61,6 +61,34 @@ export default {
                     title: "用户邮箱",
                     align: "center",
                     key: "email"
+                },
+                {
+                    title: "注册时间",
+                    align: "center",
+                    key: "createtime"
+                },
+                {
+                    title: "操作",
+                    align: "center",
+                    key: "action",
+                    render: (h, params) => {
+                        return h("div", [
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "primary",
+                                        size: "small"
+                                    },
+                                    style: {
+                                        margin: "0 3px"
+                                    }
+
+                                },
+                                "查看信息"
+                            )
+                        ])
+                    }
                 }
             ],
             queryUserFormRules: {
@@ -88,8 +116,8 @@ export default {
         query() {
             this.postRequest("/td-sys-user/queryUser", this.queryUserForm).then(
                 response => {
-                    this.users = response.data.records;
-                    this.queryUserForm.total = response.data.total;
+                    this.users = response.data.result.records;
+                    this.queryUserForm.total = response.data.result.total;
                 }
             );
         },

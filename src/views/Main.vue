@@ -5,10 +5,10 @@
     <div class="main" :class="{'main-hide-text': shrink}">
         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
             <scroll-bar ref="scrollBar">
-                <shrinkable-menu 
+                <shrinkable-menu
                     :shrink="shrink"
                     @on-change="handleSubmenuChange"
-                    :theme="menuTheme" 
+                    :theme="menuTheme"
                     :before-push="beforePush"
                     :open-names="openedSubmenuArr"
                     :menu-list="menuList">
@@ -36,12 +36,12 @@
                     <lock-screen></lock-screen>
                     <message-tip v-model="mesCount"></message-tip>
                     <theme-switch></theme-switch>
-                    
+
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                             <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
                                 <a href="javascript:void(0)">
-                                    <span class="main-user-name">{{ staffname }}</span>
+                                    <span class="main-user-name">{{ adminname }}</span>
                                     <Icon type="md-arrow-dropdown"></Icon>
                                 </a>
                                 <DropdownMenu slot="list">
@@ -77,7 +77,7 @@
     import themeSwitch from './main-components/theme-switch/theme-switch.vue';
     import Cookies from 'js-cookie';
     import scrollBar from '@/views/my-components/scroll-bar/vue-scroller-bars';
-    
+
     export default {
         components: {
             shrinkableMenu,
@@ -92,7 +92,7 @@
         data () {
             return {
                 shrink: false,
-                staffname: '',
+                adminname: '',
                 isFullScreen: false,
                 openedSubmenuArr: this.$store.state.app.openedSubmenuArr
             };
@@ -129,7 +129,7 @@
                 if (pathArr.length >= 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
-                this.staffname = Cookies.get('adminname');
+                this.adminname = Cookies.get('adminname');
                 this.postRequest("/message/readMessage", {flag : 1,staffid : Cookies.get('adminid')}).then(response => {
                   let unread = response.data.result.resultlist;
                    if (unread !== null){
@@ -139,7 +139,7 @@
                       this.$store.commit('setMessageCount', unread.length);
                    }
                 })
-                
+
             },
             toggleClick () {
                 this.shrink = !this.shrink;

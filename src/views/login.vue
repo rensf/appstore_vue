@@ -30,7 +30,7 @@
                             <Button @click="handleSubmit" type="primary" long>登录</Button>
                         </FormItem>
                     </Form>
-                    <p class="login-tip">输入任意用户名和密码即可</p>
+                    <!--<p class="login-tip">输入任意用户名和密码即可</p>-->
                 </div>
             </Card>
         </div>
@@ -62,15 +62,11 @@ export default {
                         // this.$store.commit('setMenuConfig', JSON.stringify(data.menuinfos));
                         //初始化路由
                         // this.util.initRouter(this);
-                        Cookies.set('adminid', response.data.adminid);
-                        Cookies.set('adminname', response.data.adminname);
+                        Cookies.set('adminid', response.data.result.adminid);
+                        Cookies.set('adminname', response.data.result.adminname);
                         this.$store.commit('setAvator', '../src/images/head.jpg');
                         this.$router.push({
                             name: 'home_index'
-                        });
-                        this.$Notice.success({
-                            title:'Tip',
-                            desc:'登录成功！'
                         });
                     }).catch((error) => {
                         console.log(error);
@@ -81,7 +77,3 @@ export default {
     }
 };
 </script>
-
-<style>
-
-</style>
