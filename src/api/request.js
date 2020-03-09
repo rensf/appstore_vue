@@ -6,6 +6,10 @@ const service = axios.create({
     timeout: 0
 });
 
+service.interceptors.request.use(config => {
+    return config;
+})
+
 service.interceptors.response.use(response => {
     console.log(response)
     if (response.data.code === null || response.data.code === undefined) {

@@ -3,9 +3,12 @@ import env from '../../build/env';
 import lazyLoading from './lazyLoading';
 import Cookies from 'js-cookie';
 
-let util = {
+let util = {};
 
-};
+util.setToken = function (token) {
+    Cookies.set(TOKEN_KEY, token);
+}
+
 util.title = function (title) {
     title = title || 'iView admin';
     window.document.title = title;
@@ -345,7 +348,7 @@ util.initRouterNode = function (routers, data) {
 //         }
 //     });
 //     vm.$store.commit('setTagsList', tagsList);
-    
+
 // };
 
 // // 生成路由节点
@@ -355,7 +358,7 @@ util.initRouterNode = function (routers, data) {
 //             let menu = Object.assign({}, data[i]);
 //             // menu.component = import(`@/views/${menu.component}.vue`);
 //             menu.component = lazyLoading(menu.component);
-    
+
 //             if (data[i].children && data[i].children.length > 0) {
 //                 menu.children = [];
 //                 util.initRouterNode(menu.children, data[i].children);
@@ -363,9 +366,9 @@ util.initRouterNode = function (routers, data) {
 //             let meta = {};
 //             // 给页面添加标题
 //             meta.title = menu.title ? menu.title : null;
-    
+
 //             menu.meta = meta;
-    
+
 //             routers.push(menu);
 //         }
 //     }
