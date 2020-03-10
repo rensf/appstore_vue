@@ -18,7 +18,7 @@
                                 <Col span="12" style="padding-left:6px;">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
                                         <div>
-                                            <b class="card-user-infor-name">{{ Cookies.get('adminname') }}</b>
+                                            <b class="card-user-infor-name">{{ $store.state.user.userInfo.adminname }}</b>
                                             <p>super admin</p>
                                         </div>
                                     </Row>

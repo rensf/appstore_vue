@@ -10,10 +10,10 @@
                 个人信息
             </p>
             <div>
-                <Form 
+                <Form
                     ref="userForm"
-                    :model="userForm" 
-                    :label-width="100" 
+                    :model="userForm"
+                    :label-width="100"
                     label-position="right"
                     :rules="inforValidate"
                 >
@@ -84,8 +84,6 @@
 
 
 <script>
-import Cookies from 'js-cookie';
-
 export default {
     name: 'ownspace_index',
     data () {
@@ -230,10 +228,8 @@ export default {
                           title : 'Tip',
                           desc : '修改密码成功'
                         })
-                        //移除cookie，跳转到登陆界面
-                        Cookies.remove("adminid");
-                        Cookies.remove("adminame");
-                        Cookies.remove("functionconfig")
+                        //移除token
+                        this.$store.state.user.userInfo = {};
                         this.$router.push({
                           name : 'login',
                           path : '/login'
@@ -249,7 +245,7 @@ export default {
                     this.savePassLoading = false;
                     this.editPasswordForm = {}
                 }
-                
+
             });
         },
         //初始化，加载用户信息

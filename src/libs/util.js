@@ -1,16 +1,11 @@
 import axios from 'axios';
 import env from '../../build/env';
 import lazyLoading from './lazyLoading';
-import Cookies from 'js-cookie';
 
 let util = {};
 
-util.setToken = function (token) {
-    Cookies.set(TOKEN_KEY, token);
-}
-
 util.title = function (title) {
-    title = title || 'iView admin';
+    title = title || '管理平台';
     window.document.title = title;
 };
 

@@ -212,7 +212,7 @@ export default {
                   this.clickDeleteDrafs(params.row,params.index);
                 }
               })
-              
+
             }
           }
         },
@@ -240,7 +240,7 @@ export default {
                   this.clickDeleteRecycle(params.row,params.index);
                 }
               })
-              
+
             }
           }
         },
@@ -292,7 +292,7 @@ export default {
         pageSize: 10,
       },
       Index: "",
-      adminid: this.Cookies.get('adminid'),
+      adminid: this.$store.state.user.userInfo.adminid,
       messageFormRule: {
         messagetitle: [
           { required: true, message: "消息标题不能为空" ,trigger: "blur"}
@@ -388,7 +388,7 @@ export default {
             } else if (this.currentMessageType === "unread") {
               return h("div", [markAsreadBtn(h, params),deleteunreadBtn(h,params)]); //标为已读
             } else if (this.currentMessageType === "recyclebin") {
-              return h("div", 
+              return h("div",
               [
                 restoreBtn(h, params),  //回收站还原，删除
                 deleteRecycleBtn(h, params)

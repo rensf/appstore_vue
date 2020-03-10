@@ -38,42 +38,41 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
-export default {
-    data () {
-        return {
-            loginForm: {},
-            loginRule: {
-                staffname: [
-                    { required: true, message: '用户名不能为空', trigger: 'blur' }
-                ],
-                password: [
-                    { required: true, message: '密码不能为空', trigger: 'blur' }
-                ]
-            }
-        };
-    },
-    methods: {
-        handleSubmit () {
-            this.$refs.loginForm.validate((valid) => {
-                if (valid) {
-                    this.postRequest('/td-sys-admin/login', this.loginForm).then(response => {
-                        //将权限配置存入本地缓存
-                        // this.$store.commit('setMenuConfig', JSON.stringify(data.menuinfos));
-                        //初始化路由
-                        // this.util.initRouter(this);
-                        Cookies.set('adminid', response.data.result.adminid);
-                        Cookies.set('adminname', response.data.result.adminname);
-                        this.$store.commit('setAvator', '../src/images/head.jpg');
-                        this.$router.push({
-                            name: 'home_index'
-                        });
-                    }).catch((error) => {
-                        console.log(error);
-                    });
+
+    export default {
+        data () {
+            return {
+                loginForm: {},
+                loginRule: {
+                    staffname: [
+                        {required: true, message: '用户名不能为空', trigger: 'blur'}
+                    ],
+                    password: [
+                        {required: true, message: '密码不能为空', trigger: 'blur'}
+                    ]
                 }
-            });
+            };
+        },
+        methods: {
+            handleSubmit () {
+                this.$refs.loginForm.validate((valid) => {
+                    if (valid) {
+                        this.postRequest('/td-sys-admin/login', this.loginForm).then(response => {
+                            //将权限配置存入本地缓存
+                            // this.$store.commit('setMenuConfig', JSON.stringify(data.menuinfos));
+                            //初始化路由
+                            // this.util.initRouter(this);
+                            this.$store.commit('setUserInfo', response.data.result);
+                            this.$store.commit('setAvator', '../src/images/head.jpg');
+                            this.$router.push({
+                                name: 'home_index'
+                            });
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                    }
+                });
+            }
         }
-    }
-};
+    };
 </script>

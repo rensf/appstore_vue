@@ -75,7 +75,6 @@
     import lockScreen from './main-components/lockscreen/lockscreen.vue';
     import messageTip from './main-components/message-tip.vue';
     import themeSwitch from './main-components/theme-switch/theme-switch.vue';
-    import Cookies from 'js-cookie';
     import scrollBar from '@/views/my-components/scroll-bar/vue-scroller-bars';
 
     export default {
@@ -129,8 +128,8 @@
                 if (pathArr.length >= 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
-                this.adminname = Cookies.get('adminname');
-                this.postRequest("/message/readMessage", {flag : 1,staffid : Cookies.get('adminid')}).then(response => {
+                this.adminname = this.$store.state.user.userInfo.adminname;
+                this.postRequest("/message/readMessage", {flag : 1,staffid : this.$store.state.user.userInfo.adminid}).then(response => {
                   let unread = response.data.result.resultlist;
                    if (unread !== null){
                       let messageCount = unread.length;

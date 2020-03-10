@@ -1,11 +1,15 @@
-import Cookies from 'js-cookie';
 
 const user = {
-    state: {},
+    state: {
+        userInfo: {}
+    },
     mutations: {
-        logout(state, vm) {
-            Cookies.remove('adminname');
-            Cookies.remove('adminid');
+        setUserInfo (state, userInfo) {
+            state.userInfo = userInfo;
+        },
+        logout (state, vm) {
+            //置空用户信息
+            state.userInfo = {};
             localStorage.removeItem('menuConfig');
             // 恢复默认样式
             let themeLink = document.querySelector('link[name="theme"]');

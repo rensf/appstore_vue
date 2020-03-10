@@ -30,7 +30,9 @@ const app = {
         ],
         tagsList: [...otherRouter.children],
         messageCount: 0,
-        dontCache: ['text-editor', 'artical-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
+        dontCache: [],// 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
+        locking: 1,
+        lastPageName: ''
     },
     mutations: {
         // 动态添加主界面路由，需要缓存
@@ -135,7 +137,7 @@ const app = {
         setAvator (state, path) {
             localStorage.avatorImgPath = path;
         },
-        setMenuConfig(state,config) {
+        setMenuConfig (state, config) {
             localStorage.menuConfig = config;
         },
         switchLang (state, lang) {
@@ -155,6 +157,12 @@ const app = {
             }
             state.pageOpenedList.push(tagObj);
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+        },
+        setLocking (state, locking) {
+            state.locking = locking;
+        },
+        setLastPageName (state, name) {
+            state.lastPageName = name;
         }
     }
 };

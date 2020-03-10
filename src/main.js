@@ -10,7 +10,6 @@ import VueI18n from 'vue-i18n';
 import util from './libs/util';
 import {postRequest,getRequest,openUrl} from './api/api';
 import iviewArea from 'iview-area';
-import Cookies from 'js-cookie';
 
 Vue.use(VueI18n);
 Vue.use(ViewUI);
@@ -19,7 +18,6 @@ Vue.prototype.postRequest = postRequest;  //axios post
 Vue.prototype.getRequest = getRequest;  //axios get
 Vue.prototype.openUrl = openUrl;  //打开URL
 Vue.prototype.util = util;
-Vue.prototype.Cookies = Cookies;
 
 new Vue({
     el: '#app',
