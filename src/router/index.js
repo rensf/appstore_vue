@@ -18,7 +18,7 @@ export const router = new VueRouter(RouterConfig);
 router.beforeEach((to, from, next) => {
     ViewUI.LoadingBar.start();
     Util.title(to.meta.title);
-    const token = store.state.user.userInfo;
+    const token = store.state.user.userInfo.token;
     const locking = store.state.app.locking;
     if (locking === 1 && to.name !== 'locking') { // 判断当前是否是锁定状态
         next({
@@ -28,11 +28,11 @@ router.beforeEach((to, from, next) => {
     } else if (locking === 0 && to.name === 'locking') {
         next(false);
     } else {
-        if (!token && to.name !== 'login') { // 判断是否已经登录且前往的页面不是登录页
+        if (!token && to.name !== 'login') { // 判断是否未登录且前往的页面不是登录
             next({
                 name: 'login'
             });
-        } else if (token && to.name === 'login') { // 判断是否已经登录且前往的是登录页
+        } else if (token && to.name === 'login') { // 判断是否已登录且前往的是登录页
             Util.title();
             next({
                 name: 'home_index'
