@@ -67,8 +67,7 @@
                     </Col> -->
                     <Col :md="12" :lg="24" :style="{marginBottom: '10px'}">
                         <Card title="APP排行榜" icon="md-podium">
-                            <rank-list v-for="item in appRankList" :key="item.index" :index="item.index"
-                                       :name="item.name" :total="item.total"></rank-list>
+                            <rank-list v-model="appRankList"></rank-list>
                         </Card>
                     </Col>
                 </Row>
@@ -239,19 +238,20 @@
                 newToDoItemValue: '',
                 appRankList: [
                     {
-                        index: 1,
                         name: '神奇宝贝',
                         total: 2308
                     },
                     {
-                        index: 2,
                         name: '育婴宝',
                         total: 2001
                     },
                     {
-                        index: 3,
-                        name: '作业帮',
+                        name: '作业消消乐',
                         total: 1500
+                    },
+                    {
+                        name: '咖妃',
+                        total: 1321
                     }
                 ]
             };

@@ -10,7 +10,7 @@ const app = {
         isFullScreen: false,
         openedSubmenuArr: [], // 要展开的菜单数组
         menuTheme: 'dark', // 主题
-        themeColor: '',
+        themeColor: 'b',
         pageOpenedList: [{
             title: '首页',
             path: '',

@@ -1,26 +1,29 @@
 <template>
-    <Row class="rank-list">
-        <Col :span="6">
-            <div class="rank-list-index">{{ index }}</div>
-        </Col>
-        <Col :span="12">
-            <div class="rank-list-name">{{ name }}</div>
-        </Col>
-        <Col :span="6">
-            <div class="rank-list-total">
-                {{ total }}
-            </div>
-        </Col>
-    </Row>
+    <div>
+        <Row class="rank-list" v-for="(item, index) in value" :key="index">
+            <Col :span="6">
+                <div class="rank-list-index" :class="'rank-list-index' + index" >{{ index + 1 }}</div>
+            </Col>
+            <Col :span="12">
+                <div class="rank-list-name">{{ item.name }}</div>
+            </Col>
+            <Col :span="6">
+                <div class="rank-list-total">
+                    {{ item.total }}
+                </div>
+            </Col>
+        </Row>
+    </div>
 </template>
 
 <script>
     export default {
-        name: 'rank-list',
+        name: 'rankList',
         props: {
-            index: 0,
-            name: '',
-            total: ''
+            value: {
+                type: Array,
+                default: []
+            }
         }
     };
 </script>

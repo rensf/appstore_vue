@@ -33,9 +33,7 @@ module.exports = merge(webpackBaseConfig, {
             filename: '../index.html',
             inject: false
         }),
-        new CopyWebpackPlugin([{
-                from: 'src/views/main-components/theme-switch/theme'
-            },
+        new CopyWebpackPlugin([
             {
                 from: 'src/views/my-components/text-editor/tinymce'
             }

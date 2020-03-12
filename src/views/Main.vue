@@ -21,7 +21,7 @@
         </div>
         <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
             <div class="main-header">
-                <div class="navicon-con">
+                <div class="menu-con">
                     <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)'}" type="text" @click="toggleClick">
                         <Icon type="md-menu" size="32"></Icon>
                     </Button>
@@ -35,7 +35,6 @@
                     <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
                     <lock-screen></lock-screen>
                     <message-tip v-model="mesCount"></message-tip>
-                    <theme-switch></theme-switch>
 
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
@@ -46,7 +45,7 @@
                                 </a>
                                 <DropdownMenu slot="list">
                                     <DropdownItem name="ownSpace">个人中心</DropdownItem>
-                                    <DropdownItem name="loginout" divided>退出登录</DropdownItem>
+                                    <DropdownItem name="logout" divided>退出登录</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                             <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
@@ -74,7 +73,6 @@
     import fullScreen from './main-components/fullscreen.vue';
     import lockScreen from './main-components/lockscreen/lockscreen.vue';
     import messageTip from './main-components/message-tip.vue';
-    import themeSwitch from './main-components/theme-switch/theme-switch.vue';
     import scrollBar from '@/views/my-components/scroll-bar/vue-scroller-bars';
 
     export default {
@@ -85,7 +83,6 @@
             fullScreen,
             lockScreen,
             messageTip,
-            themeSwitch,
             scrollBar
         },
         data () {
@@ -149,7 +146,7 @@
                     this.$router.push({
                         name: 'ownspace_index'
                     });
-                } else if (name === 'loginout') {
+                } else if (name === 'logout') {
                     // 退出登录
                     this.$store.commit('logout', this);
                     this.$store.commit('clearOpenedSubmenu');
