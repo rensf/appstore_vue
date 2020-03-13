@@ -9,7 +9,7 @@
                 <Row class-name="home-page-row1" :gutter="10">
                     <Col :md="12" :lg="24" :style="{marginBottom: '10px'}">
                         <Card>
-                            <Row type="flex" class="user-infor">
+                            <Row type="flex" class="user-info">
                                 <Col span="12">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
                                         <img class="avator-img" :src="avatorPath"/>
@@ -18,7 +18,7 @@
                                 <Col span="12" style="padding-left:6px;">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
                                         <div>
-                                            <b class="card-user-infor-name">{{ $store.state.user.userInfo.adminname
+                                            <b class="card-user-info-name">{{ $store.state.user.userInfo.adminname
                                                 }}</b>
                                             <p>super admin</p>
                                         </div>
@@ -93,7 +93,7 @@
                                 intro-text="今日浏览量"
                         ></infor-card>
                     </Col>
-                    <!-- <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
+                    <Col :xs="24" :sm="12" :md="6" :style="{marginBottom: '10px'}">
                         <infor-card
                             id-name="collection_count"
                             :end-val="count.collection"
@@ -110,17 +110,17 @@
                             color="#f25e43"
                             intro-text="今日服务调用量"
                         ></infor-card>
-                    </Col> -->
+                    </Col>
                 </Row>
-                <!-- <Row>
+                <Row>
                     <Card :padding="0">
                         <p slot="title" class="card-title">
                             <Icon type="md-map"></Icon>
-                            今日服务调用地理分布
+                            今日下载量地理分布
                         </p>
                         <div class="map-con">
                             <Col span="10">
-                                <map-data-table :cityData="cityData" height="281" :style-obj="{margin: '12px 0 0 11px'}"></map-data-table>
+                                <map-data-table :cityData="cityData" height="450" :style-obj="{margin: '12px 0 0 24px'}"></map-data-table>
                             </Col>
                             <Col span="14" class="map-incon">
                                 <Row type="flex" justify="center" align="middle">
@@ -129,7 +129,7 @@
                             </Col>
                         </div>
                     </Card>
-                </Row> -->
+                </Row>
             </Col>
         </Row>
         <!-- <Row :gutter="10" class="margin-top-10">

@@ -17,16 +17,16 @@
                     label-position="right"
                     :rules="inforValidate"
                 >
-                    <FormItem label="用户姓名：" prop="name">
+                    <FormItem label="用户姓名：" prop="adminname">
                         <div style="display:inline-block;width:300px;">
-                            <Input v-model="userForm.name" ></Input>
+                            <Input v-model="userForm.adminname" ></Input>
                         </div>
                     </FormItem>
-                    <FormItem label="用户手机：" prop="cellphone" >
+                    <FormItem label="用户手机：" prop="telno" >
                         <div style="display:inline-block;width:204px;">
-                            <Input v-model="userForm.cellphone" @on-keydown="hasChangePhone"></Input>
+                            <Input v-model="userForm.telno" @on-keydown="hasChangePhone"></Input>
                         </div>
-                        <div style="display:inline-block;position:relative;">
+                        <!-- <div style="display:inline-block;position:relative;">
                             <Button @click="getIdentifyCode" :disabled="canGetIdentifyCode">{{ gettingIdentifyCodeBtnContent }}</Button>
                             <div class="own-space-input-identifycode-con" v-if="inputCodeVisible">
                                 <div style="background-color:white;z-index:110;margin:10px;">
@@ -37,26 +37,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </FormItem>
                     <FormItem label="邮箱：">
                       <Span>{{ userForm.email }}</Span>
-                    </FormItem>
-                    <FormItem label="公司：">
-                        <span>{{ userForm.company }}</span>
-                    </FormItem>
-                    <FormItem label="部门：">
-                        <span>{{ userForm.department }}</span>
-                    </FormItem>
-                    <FormItem label="联系人：">
-                      <Span>{{ userForm.contacts }}</Span>
                     </FormItem>
                     <FormItem label="登录密码：">
                         <Button type="text" size="small" style="color:blue" @click="showEditPassword">修改密码</Button>
                     </FormItem>
                     <div>
-                        <Button type="text" style="width: 100px;" @click="cancelEditUserInfor">取消</Button>
-                        <Button type="primary" style="width: 100px;" :loading="save_loading" @click="saveEdit">保存</Button>
+                        <Button @click="cancelEditUserInfor">取消</Button>
+                        <Button type="primary" :loading="save_loading" @click="saveEdit">保存</Button>
                     </div>
                 </Form>
             </div>
@@ -103,15 +94,7 @@ export default {
             }
         };
         return {
-            userForm: {
-                name: '',
-                cellphone: '',
-                company: '',
-                department: '',
-                email : '',
-                contacts : ''
-            },
-            uid: '', // 登录用户的use，rId
+            userForm: {},
             securityCode: '', // 验证码
             phoneHasChanged: false, // 是否编辑了手机
             save_loading: false,
@@ -250,36 +233,7 @@ export default {
         },
         //初始化，加载用户信息
         init () {
-            // this.userForm.name = 'Lison';
-            // this.userForm.cellphone = '17712345678';
-            // this.initPhone = '17712345678';
-            // this.userForm.company = 'TalkingData';
-            // this.userForm.department = '可视化部门';
-            this.postRequest("/ownSpace/getInfor",null).then(response => {
-              console.log(response);
-              let flag = response.data.result.flag;
-              if(flag == 1){
-                //查询成功
-                let data = response.data.result;
-
-                this.userForm.name = data.staffname;
-                this.userForm.cellphone = data.telno;
-                this.initPhone = data.telno;
-                this.userForm.company = data.company;
-                this.userForm.department = data.departname;
-                this.userForm.email = data.email;
-                this.userForm.contacts = data.contacts;
-              }else{
-                this.$Notice.warning({
-                  title : 'Tip',
-                  desc : "没有查询到你的信息，请重新登陆！"
-                })
-              }
-            })
-
-
-
-
+            this.userForm = this.$store.state.user.userInfo;
         },
         cancelInputCodeBox () {
             this.inputCodeVisible = false;

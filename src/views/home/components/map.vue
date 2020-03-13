@@ -1,5 +1,5 @@
 <template>
-    <div style="width:calc(100% - 10px);height:305px;" id="home_page_map"></div>
+    <div style="width:calc(100% - 10px);height:450px;" id="home_page_map"></div>
 </template>
 
 <script>

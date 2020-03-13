@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="rank">
         <Row class="rank-list" v-for="(item, index) in value" :key="index">
             <Col :span="6">
                 <div class="rank-list-index" :class="'rank-list-index' + index" >{{ index + 1 }}</div>
