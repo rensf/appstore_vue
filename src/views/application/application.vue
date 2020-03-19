@@ -130,6 +130,7 @@
                                         type="drag"
                                         :max-size="2048"
                                         action="/api/td-sys-app/uploadApp"
+                                        :data="{token: token}"
                                         accept=".jpg, .jpeg, .png"
                                         :format="['jpg','jpeg','png']"
                                         :show-upload-list="false"
@@ -146,6 +147,7 @@
                         <FormItem label="APP上传：" prop="apppath">
                             <Upload
                                     action="/api/td-sys-app/uploadApp"
+                                    :data="{token: token}"
                                     accept=".apk"
                                     :format="['apk']"
                                     :show-upload-list="false"
@@ -167,6 +169,7 @@
                                         type="drag"
                                         multiple
                                         action="/api/td-sys-app/uploadApp"
+                                        :data="{token: token}"
                                         accept=".jpg, .jpeg, .png"
                                         :format="['jpg','jpeg','png']"
                                         :show-upload-list="false"
@@ -210,6 +213,7 @@
     export default {
         data () {
             return {
+                token: this.$store.state.user.userInfo.token,
                 showAdd: false,
                 queryForm: {
                     total: 0,

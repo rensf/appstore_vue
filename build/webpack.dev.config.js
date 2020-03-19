@@ -29,7 +29,7 @@ module.exports = merge(webpackBaseConfig, {
             minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
-            title: 'iView admin v' + package.version,
+            title: 'appstore v' + package.version,
             filename: '../index.html',
             inject: false
         }),
