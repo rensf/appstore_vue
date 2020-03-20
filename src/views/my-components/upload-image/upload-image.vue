@@ -1,3 +1,7 @@
+<style lang="less" scoped>
+    @import "./upload-image.less";
+</style>
+
 <template>
     <div class="upload">
         <div v-if="showList"
@@ -22,8 +26,8 @@
                 :on-exceeded-size="handleMaxSize"
                 :on-success="uploadSuccess"
         >
-            <Icon :style="{width: iconWidth + 'px', height: iconHeight + 'px', lineHeight: iconHeight + 'px'}" :type="icon"></Icon>
-            <p>{{text}}</p>
+            <Icon :style="{height: uploadHeight + 'px', lineHeight: uploadHeight + 'px'}" :type="icon"></Icon>
+            <span>{{text}}</span>
         </Upload>
     </div>
 </template>
@@ -36,21 +40,11 @@
                 type: Boolean,
                 default: true
             },
-            listWidth: {
-                type: Number,
-                default: 75
-            },
-            listHeight: {
-                type: Number,
-                default: 75
-            },
+            listWidth: '',
+            listHeight: '',
             list: {
                 type: Array,
                 default: () => {[]}
-            },
-            uploadWidth: {
-                type: Number,
-                default: 75
             },
             type: {
                 type: String,
@@ -66,18 +60,12 @@
                 type: Boolean,
                 default: false
             },
-            action: {
-                type: String,
-                default: ''
-            },
+            action: '',
             data: {
                 type: Object,
                 default: () => {{}}
             },
-            accept: {
-                type: String,
-                default: ''
-            },
+            accept: '',
             format: {
                 type: Array,
                 default: () => {[]}
@@ -86,22 +74,19 @@
                 type: Boolean,
                 default: false
             },
-            iconWidth: {
-                type: Number,
-                default: 75
+            uploadWidth: {
+                type: String,
+                default: '75'
             },
-            iconHeight: {
-                type: Number,
-                default: 75
+            uploadHeight: {
+                type: String,
+                default: '75'
             },
             icon: {
                 type: String,
                 default: 'md-add'
             },
-            text: {
-                type: String,
-                default: ''
-            }
+            text: ''
         },
         methods: {
             handleBeforeUpload () {
@@ -133,30 +118,3 @@
         }
     };
 </script>
-
-<style lang="less" scoped>
-    .upload {
-        display: flex;
-
-        .upload-image-list {
-            display: inline-block;
-            text-align: center;
-            border: 1px solid transparent;
-            border-radius: 4px;
-            overflow: hidden;
-            background: #fff;
-            position: relative;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            margin-right: 4px;
-
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-
-        &-image {
-            display: inline-block;
-        }
-    }
-</style>

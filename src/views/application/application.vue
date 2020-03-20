@@ -103,7 +103,6 @@
                         @on-cancel="cancelAdd()"
                 >
                     <Form
-                            style="width: 575px;"
                             ref="addForm"
                             :model="addForm"
                             :rules="addFormRule"
@@ -121,6 +120,15 @@
                             ></Input>
                         </FormItem>
                         <FormItem label="APP图标：" prop="appicon">
+                            <Upload-Image
+                                    type="drag"
+                                    :max-size="2048"
+                                    action="/api/td-sys-app/uploadApp"
+                                    :data="{token: token}"
+                                    accept=".jpg, .jpeg, .png"
+                                    :format="['jpg','jpeg','png']"
+                                    icon="md-camera"
+                            ></Upload-Image>
                             <div style="display: flex;">
                                 <div class="upload-icon-list" v-for="item in appiconList">
                                     <img :src="item.url"/>
@@ -210,7 +218,12 @@
 </template>
 
 <script>
+    import UploadImage from '@/views/my-components/upload-image/upload-image.vue';
+
     export default {
+        components: {
+            UploadImage
+        },
         data () {
             return {
                 token: this.$store.state.user.userInfo.token,

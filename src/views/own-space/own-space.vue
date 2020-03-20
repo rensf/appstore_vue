@@ -51,7 +51,6 @@
                     </div>
                 </Form>
                 <br>
-                <upload-image :listWidth="100" :listHeight="100" :type="'drag'"></upload-image>
             </div>
         </Card>
         <Modal v-model="editPasswordModal" :closable='false' :mask-closable=false :width="500">
