@@ -122,35 +122,14 @@
                         <FormItem label="APP图标：" prop="appicon">
                             <Upload-Image
                                     type="drag"
+                                    multiple
                                     :max-size="2048"
                                     action="/api/td-sys-app/uploadApp"
-                                    :data="{token: token}"
+                                    :headers="{token: token}"
                                     accept=".jpg, .jpeg, .png"
                                     :format="['jpg','jpeg','png']"
                                     icon="md-camera"
                             ></Upload-Image>
-                            <div style="display: flex;">
-                                <div class="upload-icon-list" v-for="item in appiconList">
-                                    <img :src="item.url"/>
-                                </div>
-                                <Upload
-                                        class="upload-icon"
-                                        type="drag"
-                                        :max-size="2048"
-                                        action="/api/td-sys-app/uploadApp"
-                                        :data="{token: token}"
-                                        accept=".jpg, .jpeg, .png"
-                                        :format="['jpg','jpeg','png']"
-                                        :show-upload-list="false"
-                                        :before-upload="handleBeforeUploadIcon"
-                                        :on-format-error="handleFormatError"
-                                        :on-exceeded-size="handleMaxSize"
-                                        :on-success="uploadAppicon"
-                                >
-                                    <Icon class="upload-icon-icon" type="md-camera"></Icon>
-                                </Upload>
-                                <Input class="upload-input" v-model="addForm.appicon"></Input>
-                            </div>
                         </FormItem>
                         <FormItem label="APP上传：" prop="apppath">
                             <Upload

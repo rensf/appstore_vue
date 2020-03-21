@@ -35,10 +35,6 @@ service.interceptors.response.use(
                 title: 'Tip',
                 desc: response.data.msg
             });
-            store.commit('logout')
-            router.push({
-                name: 'login'
-            })
             return;
         } else if (code.substr(0, 1) === '2') {
             Notice.error({

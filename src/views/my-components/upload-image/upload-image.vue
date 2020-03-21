@@ -17,6 +17,7 @@
                 :max-size="maxSize"
                 :multiple="multiple"
                 :action="action"
+                :headers="headers"
                 :data="data"
                 :accept="accept"
                 :format="format"
@@ -29,6 +30,7 @@
             <Icon :style="{height: uploadHeight + 'px', lineHeight: uploadHeight + 'px'}" :type="icon"></Icon>
             <span>{{text}}</span>
         </Upload>
+        <Input v-if="!showList" class="upload-input" v-model="value"/>
     </div>
 </template>
 
@@ -42,9 +44,12 @@
             },
             listWidth: '',
             listHeight: '',
+            value: '',
             list: {
                 type: Array,
-                default: () => {[]}
+                default: () => {
+                    [];
+                }
             },
             type: {
                 type: String,
@@ -61,14 +66,26 @@
                 default: false
             },
             action: '',
+            headers: {
+                type: Object,
+                default: () => {
+                    {
+                    }
+                }
+            },
             data: {
                 type: Object,
-                default: () => {{}}
+                default: () => {
+                    {
+                    }
+                }
             },
             accept: '',
             format: {
                 type: Array,
-                default: () => {[]}
+                default: () => {
+                    [];
+                }
             },
             showUploadList: {
                 type: Boolean,
@@ -110,10 +127,27 @@
                     title: '文件大小超过限制！'
                 });
             },
-            uploadSuccess () {
-                this.$Notice.success({
-                    title: '文件上传成功！'
-                });
+            uploadSuccess (res) {
+                if (res.code === '0') {
+                    if (this.showList) {
+
+                    }
+                    this.$Notice.success({
+                        title: '文件上传成功！'
+                    });
+                } else if (res.code.substring(0, 1) === '1') {
+                    this.$Notice.warning({
+                        title: res.msg
+                    });
+                } else if (res.code.substr(0, 1) === '2') {
+                    this.$Notice.error({
+                        title: res.msg
+                    });
+                    this.$store.commit('logout');
+                    this.$router.push({
+                        name: 'login'
+                    });
+                }
             }
         }
     };
