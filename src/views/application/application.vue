@@ -110,20 +110,16 @@
                             :label-width="100"
                     >
                         <FormItem label="APP名称：" prop="appname">
-                            <Input type="text" v-model="addForm.appname" placeholder="请输入APP名称..."></Input>
+                            <Input style="max-width: 500px;" type="text" v-model="addForm.appname" placeholder="请输入APP名称..."></Input>
                         </FormItem>
                         <FormItem label="APP描述：" prop="appdetail">
-                            <Input
-                                    type="textarea"
-                                    v-model="addForm.appdetail"
-                                    placeholder="请输入APP描述..."
-                            ></Input>
+                            <Input style="max-width: 500px;" type="textarea" v-model="addForm.appdetail" placeholder="请输入APP描述..."></Input>
                         </FormItem>
                         <FormItem label="APP图标：" prop="appicon">
                             <Upload-Image
                                     type="drag"
-                                    multiple
                                     :max-size="2048"
+                                    :max-length="1"
                                     action="/api/td-sys-app/uploadApp"
                                     :headers="{token: token}"
                                     accept=".jpg, .jpeg, .png"
@@ -353,15 +349,6 @@
                 this.appiconList = [];
                 this.appimageList = [];
             },
-            handleBeforeUploadIcon () {
-                const iconMax = this.appiconList.length < 1;
-                if (!iconMax) {
-                    this.$Notice.warning({
-                        title: '只可以上传一个APP图标'
-                    });
-                }
-                return iconMax;
-            },
             handleFormatError (file) {
                 this.$Notice.warning({
                     title: '文件格式错误',
@@ -451,7 +438,6 @@
                 this.pictureList = [];
             },
             delete (v, index) {
-                console.log(v);
                 this.$Modal.confirm({
                     title: '确认删除',
                     content: '您确认要删除该记录吗?',

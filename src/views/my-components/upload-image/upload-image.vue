@@ -6,8 +6,8 @@
     <div class="upload">
         <div v-if="showList"
              class="upload-image-list"
-             :style="{width: listWidth + 'px', height: listHeight  + 'px', lineHeight: listHeight  + 'px'}"
-             v-for="item in list">
+             :style="{width: uploadWidth + 'px', height: uploadHeight  + 'px', lineHeight: uploadHeight  + 'px'}"
+             v-for="item in imgList">
             <img :src="item.url"/>
         </div>
         <Upload
@@ -42,15 +42,10 @@
                 type: Boolean,
                 default: true
             },
-            listWidth: '',
-            listHeight: '',
-            value: '',
             list: {
-                type: Array,
-                default: () => {
-                    [];
-                }
+                type: Array
             },
+            value: '',
             type: {
                 type: String,
                 default: 'select'
@@ -69,22 +64,17 @@
             headers: {
                 type: Object,
                 default: () => {
-                    {
-                    }
                 }
             },
             data: {
                 type: Object,
                 default: () => {
-                    {
-                    }
                 }
             },
             accept: '',
             format: {
                 type: Array,
                 default: () => {
-                    [];
                 }
             },
             showUploadList: {
@@ -105,17 +95,22 @@
             },
             text: ''
         },
+        data () {
+            return {
+                imgList: this.list ? this.list : []
+            };
+        },
         methods: {
             handleBeforeUpload () {
                 if (this.maxLength) {
-                    const check = this.list.length < this.maxLength;
+                    const check = this.imgList.length < this.maxLength;
                     if (!check) {
                         this.$Notice.warning({
                             title: '文件数量超过限制！'
                         });
                     }
+                    return check;
                 }
-                return true;
             },
             handleFormatError () {
                 this.$Notice.warning({
@@ -129,8 +124,11 @@
             },
             uploadSuccess (res) {
                 if (res.code === '0') {
+                    this.imgList.push({
+                        url: '/api/td-sys-app/previewAppImage/' + res.result
+                    });
                     if (this.showList) {
-
+                        this.$emit('upload', res.result);
                     }
                     this.$Notice.success({
                         title: '文件上传成功！'

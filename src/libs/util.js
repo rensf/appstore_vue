@@ -9,11 +9,11 @@ util.title = function (title) {
     window.document.title = title;
 };
 
-const ajaxUrl = env === 'development' ?
-    '/src/api' :
-    env === 'production' ?
-    'https://www.url.com' :
-    'https://debug.url.com';
+const ajaxUrl = env === 'development'
+    ? '/src/api'
+    : env === 'production'
+        ? 'https://www.url.com'
+        : 'https://debug.url.com';
 
 util.ajax = axios.create({
     baseURL: ajaxUrl,
@@ -103,15 +103,15 @@ util.setCurrentPath = function (vm, name) {
         }];
     } else if ((name.indexOf('_index') >= 0 || isOtherRouter) && name !== 'home_index') {
         currentPathArr = [{
-                title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
-                path: '/home',
-                name: 'home_index'
-            },
-            {
-                title: title,
-                path: '',
-                name: name
-            }
+            title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
+            path: '/home',
+            name: 'home_index'
+        },
+        {
+            title: title,
+            path: '',
+            name: name
+        }
         ];
     } else {
         let currentPathObj = vm.$store.state.app.routers.filter(item => {
@@ -138,35 +138,35 @@ util.setCurrentPath = function (vm, name) {
             }];
         } else if (currentPathObj.children.length <= 1 && currentPathObj.name !== 'home') {
             currentPathArr = [{
-                    title: '首页',
-                    path: '/home',
-                    name: 'home_index'
-                },
-                {
-                    title: currentPathObj.title,
-                    path: '',
-                    name: name
-                }
+                title: '首页',
+                path: '/home',
+                name: 'home_index'
+            },
+            {
+                title: currentPathObj.title,
+                path: '',
+                name: name
+            }
             ];
         } else {
             let childObj = currentPathObj.children.filter((child) => {
                 return child.name === name;
             })[0];
             currentPathArr = [{
-                    title: '首页',
-                    path: '/home',
-                    name: 'home_index'
-                },
-                {
-                    title: currentPathObj.title,
-                    path: '',
-                    name: currentPathObj.name
-                },
-                {
-                    title: childObj.title,
-                    path: currentPathObj.path + '/' + childObj.path,
-                    name: name
-                }
+                title: '首页',
+                path: '/home',
+                name: 'home_index'
+            },
+            {
+                title: currentPathObj.title,
+                path: '',
+                name: currentPathObj.name
+            },
+            {
+                title: childObj.title,
+                path: currentPathObj.path + '/' + childObj.path,
+                name: name
+            }
             ];
         }
     }
@@ -245,7 +245,7 @@ util.fullscreenEvent = function (vm) {
     // 全屏相关
 };
 
-//初始化路由
+// 初始化路由
 util.initRouter = function (vm) {
     const constRoutes = [];
     const otherRoutes = [];
@@ -305,7 +305,7 @@ util.initRouterNode = function (routers, data) {
     }
 };
 
-//初始化路由
+// 初始化路由
 // util.initRouter = function (vm) {
 //     const constRoutes = [];
 //     const otherRoutes = [];
@@ -369,7 +369,7 @@ util.initRouterNode = function (routers, data) {
 //     }
 // };
 
-//格式化日期
+// 格式化日期
 util.formatDate = function (time) {
     let date = new Date(time);
     let year = date.getFullYear();
@@ -379,7 +379,6 @@ util.formatDate = function (time) {
     let minute = date.getMinutes();
     let second = date.getSeconds();
     return year + '/' + month + '/' + day + '  ' + hour + ':' + minute + ':' + second;
-}
+};
 
 export default util;
-
