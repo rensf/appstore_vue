@@ -128,7 +128,7 @@
                         url: '/api/td-sys-app/previewAppImage/' + res.result
                     });
                     if (this.showList) {
-                        this.$emit('upload', res.result);
+                        this.$emit('upload-success', res.result);
                     }
                     this.$Notice.success({
                         title: '文件上传成功！'

@@ -125,6 +125,7 @@
                                     accept=".jpg, .jpeg, .png"
                                     :format="['jpg','jpeg','png']"
                                     icon="md-camera"
+                                    @upload-success="uploadAppicon"
                             ></Upload-Image>
                         </FormItem>
                         <FormItem label="APP上传：" prop="apppath">
