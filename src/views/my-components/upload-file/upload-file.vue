@@ -1,5 +1,5 @@
 <style lang="less" scoped>
-    @import "./upload-image.less";
+    @import "upload-file.less";
 </style>
 
 <template>
@@ -11,7 +11,7 @@
             <img :src="item.url"/>
         </div>
         <Upload
-                class="upload-image"
+                class="upload-file"
                 :style="{width: uploadWidth + 'px'}"
                 :type="type"
                 :max-size="maxSize"
@@ -36,7 +36,7 @@
 
 <script>
     export default {
-        name: 'upload-image',
+        name: 'upload-file',
         props: {
             showList: {
                 type: Boolean,

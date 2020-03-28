@@ -1,71 +1,5 @@
 <style lang="less" scoped>
     @import "../../styles/common.less";
-
-    .upload-icon-list {
-        display: inline-block;
-        width: 75px;
-        height: 75px;
-        text-align: center;
-        line-height: 75px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        overflow: hidden;
-        background: #fff;
-        position: relative;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-        margin-right: 4px;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
-    }
-
-    .upload-icon {
-        display: inline-block;
-        width: 75px;
-
-        .upload-icon-icon {
-            width: 75px;
-            height: 75px;
-            line-height: 75px;
-        }
-    }
-
-    .upload-image-list {
-        display: inline-block;
-        width: 75px;
-        height: 160px;
-        text-align: center;
-        line-height: 160px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        overflow: hidden;
-        background: #fff;
-        position: relative;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-        margin-right: 4px;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
-    }
-
-    .upload-image {
-        display: inline-block;
-        width: 75px;
-
-        .upload-image-icon {
-            width: 75px;
-            height: 160px;
-            line-height: 160px;
-        }
-    }
-
-    .upload-input {
-        display: none;
-    }
 </style>
 
 <template>
@@ -110,15 +44,18 @@
                             :label-width="100"
                     >
                         <FormItem label="APP名称：" prop="appname">
-                            <Input style="max-width: 500px;" type="text" v-model="addForm.appname" placeholder="请输入APP名称..."></Input>
+                            <Input style="max-width: 500px;" type="text" v-model="addForm.appname"
+                                   placeholder="请输入APP名称..."></Input>
                         </FormItem>
                         <FormItem label="APP描述：" prop="appdetail">
-                            <Input style="max-width: 500px;" type="textarea" v-model="addForm.appdetail" placeholder="请输入APP描述..."></Input>
+                            <Input style="max-width: 500px;" type="textarea" v-model="addForm.appdetail"
+                                   placeholder="请输入APP描述..."></Input>
                         </FormItem>
                         <FormItem label="APP图标：" prop="appicon">
-                            <Upload-Image
+                            <Upload-File
+                                    :list="appiconList"
                                     type="drag"
-                                    :max-size="2048"
+                                    :max-size="1024"
                                     :max-length="1"
                                     action="/api/td-sys-app/uploadApp"
                                     :headers="{token: token}"
@@ -126,44 +63,32 @@
                                     :format="['jpg','jpeg','png']"
                                     icon="md-camera"
                                     @upload-success="uploadAppicon"
-                            ></Upload-Image>
+                            ></Upload-File>
                         </FormItem>
                         <FormItem label="APP上传：" prop="apppath">
-                            <Upload
+                            <Upload-File
+                                    :showList="false"
                                     action="/api/td-sys-app/uploadApp"
-                                    :data="{token: token}"
+                                    :headers="{token: token}"
                                     accept=".apk"
                                     :format="['apk']"
-                                    :show-upload-list="false"
-                                    :before-upload="handleBeforeUploadApp"
-                                    :on-format-error="handleAppFormatError"
-                                    :on-success="uploadApp"
-                            >
-                                <Button type="dashed" icon="ios-cloud-upload-outline">上传</Button>
-                            </Upload>
-                            <Input class="upload-input" v-model="addForm.apppath"></Input>
+                                    icon="ios-cloud-upload-outline"
+                                    text="上传"
+                                    @upload-success="uploadApp"
+                            ></Upload-File>
                         </FormItem>
                         <FormItem label="APP图片：" prop="appphoto">
-                            <div style="display: flex">
-                                <div class="upload-image-list" v-for="item in appimageList">
-                                    <img :src="item.url"/>
-                                </div>
-                                <Upload
-                                        class="upload-image"
-                                        type="drag"
-                                        multiple
-                                        action="/api/td-sys-app/uploadApp"
-                                        :data="{token: token}"
-                                        accept=".jpg, .jpeg, .png"
-                                        :format="['jpg','jpeg','png']"
-                                        :show-upload-list="false"
-                                        :before-upload="handleBeforeUploadImage"
-                                        :on-format-error="handleFormatError"
-                                        :on-success="uploadAppimage"
-                                >
-                                    <Icon class="upload-image-icon" type="md-add"></Icon>
-                                </Upload>
-                            </div>
+                            <Upload-File
+                                    :list="appimageList"
+                                    type="drag"
+                                    :max-size="2048"
+                                    action="/api/td-sys-app/uploadApp"
+                                    :headers="{token: token}"
+                                    accept=".jpg, .jpeg, .png"
+                                    :format="['jpg','jpeg','png']"
+                                    icon="md-add"
+                                    @upload-success="uploadAppimage"
+                            ></Upload-File>
                         </FormItem>
                     </Form>
                     <div slot="footer">
@@ -194,11 +119,11 @@
 </template>
 
 <script>
-    import UploadImage from '@/views/my-components/upload-image/upload-image.vue';
+    import UploadFile from '@/views/my-components/upload-file/upload-file.vue';
 
     export default {
         components: {
-            UploadImage
+            UploadFile
         },
         data () {
             return {
@@ -350,23 +275,8 @@
                 this.appiconList = [];
                 this.appimageList = [];
             },
-            handleFormatError (file) {
-                this.$Notice.warning({
-                    title: '文件格式错误',
-                    desc: file.name + '文件格式错误，请选择.jpg或.png格式的文件。'
-                });
-            },
-            handleMaxSize (file) {
-                this.$Notice.warning({
-                    title: '超出文件大小限制',
-                    desc: file.name + '太大，请不要超过100KB。'
-                });
-            },
             uploadAppicon (res) {
                 this.addForm.appicon = res;
-                this.appiconList.push({
-                    url: '/api/td-sys-app/previewAppImage/' + res
-                });
             },
             handleBeforeUploadApp () {
                 const appMax = this.appList.length < 1;
@@ -388,20 +298,8 @@
                     value: res
                 });
             },
-            handleBeforeUploadImage () {
-                const imageMax = this.appimageList.length < 5;
-                if (!imageMax) {
-                    this.$Notice.warning({
-                        title: '最多可以上传5张图片'
-                    });
-                }
-                return imageMax;
-            },
             uploadAppimage (res) {
-                this.appimageList.push({
-                    url: '/api/td-sys-app/previewAppImage/' + res,
-                    value: res
-                });
+                this.appimageList.push(res);
             },
             confirmAdd () {
                 this.appimageList.forEach((item, index) => {

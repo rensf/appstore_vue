@@ -77,13 +77,8 @@
 
 
 <script>
-    import uploadImage from '@/views/my-components/upload-image/upload-image.vue'
-
     export default {
         name: 'ownspace_index',
-        components: {
-            uploadImage
-        },
         data () {
             const validePhone = (rule, value, callback) => {
                 var re = /^1[0-9]{10}$/;
