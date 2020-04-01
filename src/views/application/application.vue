@@ -122,6 +122,7 @@
     import UploadFile from '@/views/my-components/upload-file/upload-file.vue';
 
     export default {
+        name: 'application',
         components: {
             UploadFile
         },
