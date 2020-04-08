@@ -9,12 +9,12 @@
                 <span class="drawing-item-copy" title="复制" onClick={event=>{
                     copyItem(element, parent); event.stopPropagation()
                 }}>
-                    <i-icon type="md-copy" />
+                    <Icon type="md-copy" />
                 </span>,
                 <span class="drawing-item-delete" title="删除" onClick={event=>{
                     deleteItem(index, parent); event.stopPropagation()
                 }}>
-                    <i-icon type="md-trash" />
+                    <Icon type="md-trash" />
                 </span>
             ];
         }
@@ -28,12 +28,12 @@
             let labelWidth = element.labelWidth ? `${element.labelWidth}px` : null
             if (element.showLabel === false) labelWidth = '0'
             return (
-                <i-col span={element.span} class={className} nativeOnClick={ event => { activeItem(element); event.stopPropagation() }}>
-                    <i-form-item label-width={labelWidth} label={element.showLabel ? element.label : ''} required={element.required}>
+                <Col span={element.span} class={className} nativeOnClick={ event => { activeItem(element); event.stopPropagation() }}>
+                    <FormItem label-width={labelWidth} label={element.showLabel ? element.label : ''} required={element.required}>
                         <render key={element.renderKey} conf={element} onInput={event=> {this.$set(element, 'defaultValue', event)}} />
-                    </i-form-item>
+                    </FormItem>
                     {components.itemBtns.apply(this, arguments)}
-                </i-col>
+                </Col>
             )
         },
         rowFormItem(h, element, index, parent) {
@@ -41,20 +41,20 @@
             const className = this.activeId === element.formId ? 'drawing-row-item active-from-item' : 'drawing-row-item'
             let child = renderChildren.apply(this, arguments)
             if (element.type === 'flex') {
-                child = <i-row type={element.type} justify={element.justify} align={element.align}>
+                child = <Row type={element.type} justify={element.justify} align={element.align}>
                             {child}
-                         </i-row>
+                         </Row>
             }
             return (
-                <i-col span={element.span}>
-                    <i-row gutter={element.gutter} class={className} nativeOnClick={event => { activeItem(element); event.stopPropagation() }}>
+                <Col span={element.span}>
+                    <Row gutter={element.gutter} class={className} nativeOnClick={event => { activeItem(element); event.stopPropagation() }}>
                         <span class="component-name">{element.componentName}</span>
                         <draggable list={element.children} animation={340} group="componentsGroup" class="drag-wrapper">
                             {child}
                         </draggable>
                         {components.itemBtns.apply(this, arguments)}
-                    </i-row>
-                </i-col>
+                    </Row>
+                </Col>
             )
         }
     }
@@ -89,8 +89,6 @@
         ],
         render(h) {
             const layout = layouts[this.element.layout]
-
-            console.log(layout)
             if (layout) {
                 return layout.call(this, h, this.element, this.index, this.drawingList)
             }

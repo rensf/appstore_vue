@@ -152,7 +152,6 @@
             },
             addComponent (item) {
                 const clone = this.cloneComponent(item);
-                console.log(clone)
                 this.drawingList.push(clone);
                 this.activeFormItem(clone);
             },
