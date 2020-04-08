@@ -1,18 +1,15 @@
 import Vue from 'vue';
-import ViewUI from 'view-design';
+import iView from 'view-design';
 import {router} from './router/index';
 import {appRouter} from './router/router';
 import store from './store';
 import App from './app.vue';
-import '@/locale';
 import 'view-design/dist/styles/iview.css';
-import VueI18n from 'vue-i18n';
 import util from './libs/util';
-import {postRequest,getRequest,openUrl} from './api/api';
+import {postRequest, getRequest, openUrl} from './api/api';
 import iviewArea from 'iview-area';
 
-Vue.use(VueI18n);
-Vue.use(ViewUI);
+Vue.use(iView);
 Vue.use(iviewArea);
 Vue.prototype.postRequest = postRequest;  //axios post
 Vue.prototype.getRequest = getRequest;  //axios get

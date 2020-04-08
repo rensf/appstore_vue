@@ -5,6 +5,7 @@ import {router} from '@/router/index';
 
 const app = {
     state: {
+        avatarImgPath: '',
         cachePage: [],
         lang: '',
         isFullScreen: false,
@@ -17,13 +18,11 @@ const app = {
             name: 'home_index'
         }],
         currentPageName: '',
-        currentPath: [
-            {
-                title: '首页',
-                path: '',
-                name: 'home_index'
-            }
-        ], // 面包屑数组
+        currentPath: [{
+            title: '首页',
+            path: '',
+            name: 'home_index'
+        }], // 面包屑数组
         menuList: [],
         routers: [
             otherRouter
@@ -134,8 +133,8 @@ const app = {
         setCurrentPageName (state, name) {
             state.currentPageName = name;
         },
-        setAvator (state, path) {
-            localStorage.avatorImgPath = path;
+        setAvatar (state, path) {
+            state.avatarImgPath = path;
         },
         setMenuConfig (state, config) {
             localStorage.menuConfig = config;

@@ -1,6 +1,5 @@
 import service from './request';
 
-
 export const postRequest = (url, params) => {
     return service({
         method: 'post',

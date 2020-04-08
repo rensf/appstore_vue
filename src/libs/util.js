@@ -1,6 +1,5 @@
-import axios from 'axios';
-import env from '../../build/env';
 import lazyLoading from './lazyLoading';
+import routerData from '@/api/routerData.js';
 
 let util = {};
 
@@ -8,17 +7,6 @@ util.title = function (title) {
     title = title || '管理平台';
     window.document.title = title;
 };
-
-const ajaxUrl = env === 'development'
-    ? '/src/api'
-    : env === 'production'
-        ? 'https://www.url.com'
-        : 'https://debug.url.com';
-
-util.ajax = axios.create({
-    baseURL: ajaxUrl,
-    timeout: 30000
-});
 
 util.inOf = function (arr, targetArr) {
     let res = true;
@@ -65,11 +53,7 @@ util.getRouterObjByName = function (routers, name) {
 };
 
 util.handleTitle = function (vm, item) {
-    if (typeof item.title === 'object') {
-        return vm.$t(item.title.i18n);
-    } else {
-        return item.title;
-    }
+    return item.title;
 };
 
 util.setCurrentPath = function (vm, name) {
@@ -107,11 +91,11 @@ util.setCurrentPath = function (vm, name) {
             path: '/home',
             name: 'home_index'
         },
-        {
-            title: title,
-            path: '',
-            name: name
-        }
+            {
+                title: title,
+                path: '',
+                name: name
+            }
         ];
     } else {
         let currentPathObj = vm.$store.state.app.routers.filter(item => {
@@ -142,11 +126,11 @@ util.setCurrentPath = function (vm, name) {
                 path: '/home',
                 name: 'home_index'
             },
-            {
-                title: currentPathObj.title,
-                path: '',
-                name: name
-            }
+                {
+                    title: currentPathObj.title,
+                    path: '',
+                    name: name
+                }
             ];
         } else {
             let childObj = currentPathObj.children.filter((child) => {
@@ -157,16 +141,16 @@ util.setCurrentPath = function (vm, name) {
                 path: '/home',
                 name: 'home_index'
             },
-            {
-                title: currentPathObj.title,
-                path: '',
-                name: currentPathObj.name
-            },
-            {
-                title: childObj.title,
-                path: currentPathObj.path + '/' + childObj.path,
-                name: name
-            }
+                {
+                    title: currentPathObj.title,
+                    path: '',
+                    name: currentPathObj.name
+                },
+                {
+                    title: childObj.title,
+                    path: currentPathObj.path + '/' + childObj.path,
+                    name: name
+                }
             ];
         }
     }
@@ -259,29 +243,26 @@ util.initRouter = function (vm) {
         },
         component: 'error-page/404'
     }];
-    // 模拟异步请求
-    util.ajax('routerData.json').then(res => {
-        var menuData = res.data;
-        util.initRouterNode(constRoutes, menuData);
-        util.initRouterNode(otherRoutes, otherRouter);
-        // 添加主界面路由
-        vm.$store.commit('updateAppRouter', constRoutes.filter(item => item.children.length > 0));
-        // 添加全局路由
-        vm.$store.commit('updateDefaultRouter', otherRoutes);
-        // 刷新界面菜单
-        vm.$store.commit('updateMenulist', constRoutes.filter(item => item.children.length > 0));
+    var menuData = routerData;
+    util.initRouterNode(constRoutes, menuData);
+    util.initRouterNode(otherRoutes, otherRouter);
+    // 添加主界面路由
+    vm.$store.commit('updateAppRouter', constRoutes.filter(item => item.children.length > 0));
+    // 添加全局路由
+    vm.$store.commit('updateDefaultRouter', otherRoutes);
+    // 刷新界面菜单
+    vm.$store.commit('updateMenulist', constRoutes.filter(item => item.children.length > 0));
 
-        let tagsList = [];
+    let tagsList = [];
 
-        vm.$store.state.app.routers.map((item) => {
-            if (item.children.length <= 1) {
-                tagsList.push(item.children[0]);
-            } else {
-                tagsList.push(...item.children);
-            }
-        });
-        vm.$store.commit('setTagsList', tagsList);
+    vm.$store.state.app.routers.map((item) => {
+        if (item.children.length <= 1) {
+            tagsList.push(item.children[0]);
+        } else {
+            tagsList.push(...item.children);
+        }
     });
+    vm.$store.commit('setTagsList', tagsList);
 };
 
 // 生成路由节点

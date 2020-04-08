@@ -1,24 +1,86 @@
+export const formConf = {
+    formRef: 'elForm',
+    formModel: 'formData',
+    size: 'medium',
+    labelPosition: 'right',
+    labelWidth: 100,
+    formRules: 'rules',
+    gutter: 15,
+    disabled: false,
+    span: 24,
+    formBtns: true
+};
+
 export const inputComponents = [
     {
         label: '单行文本',
         tag: 'i-input',
-        tagIcon: '',
+        tagIcon: 'md-create',
         placeholder: '请输入',
         defaultValue: undefined,
+        span: 24,
+        showLabel: true,
+        labelWidth: null,
+        style: {width: '100%'},
+        clearable: true,
+        prepend: '',
+        append: '',
+        prefix: '',
+        suffix: '',
+        maxlength: null,
+        'show-word-limit': false,
+        readonly: false,
+        disable: false,
+        required: true,
+        regList: [],
+        changeTag: true
     },
     {
         label: '多行文本',
         tag: 'i-input',
+        tagIcon: 'md-create',
         type: 'textarea',
         placeholder: '请输入',
         defaultValue: undefined,
+        span: 24,
+        showLabel: true,
+        labelWidth: null,
+        autosize: {
+            minRows: 4,
+            maxRows: 4
+        },
+        style: {width: '100%'},
+        maxlength: null,
+        'show-word-limit': false,
+        readonly: false,
+        disable: false,
+        required: true,
+        regList: [],
+        changeTag: true
     },
     {
         label: '密码',
         tag: 'i-input',
+        tagIcon: 'md-create',
         type: 'password',
         placeholder: '请输入',
         defaultValue: undefined,
+        span: 24,
+        showLabel: true,
+        labelWidth: null,
+        style: {width: '100%'},
+        clearable: true,
+        prepend: '',
+        append: '',
+        prefix: '',
+        suffix: '',
+        maxlength: null,
+        'show-word-limit': false,
+        readonly: false,
+        disable: false,
+        required: true,
+        regList: [],
+        changeTag: true
     }
 ];
 
@@ -26,7 +88,7 @@ export const selectComponents = [
     {
         label: '下拉选择',
         tag: 'i-select',
-        placeholder: '请输入',
+        placeholder: '请选择',
         defaultValue: undefined,
     },
     {

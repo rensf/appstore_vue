@@ -48,7 +48,7 @@
                                     <DropdownItem name="logout" divided>退出登录</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
-                            <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
+                            <Avatar :src="avatarPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
                         </Row>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
     import fullScreen from './main-components/fullscreen.vue';
     import lockScreen from './main-components/lockscreen/lockscreen.vue';
     import messageTip from './main-components/message-tip.vue';
-    import scrollBar from '@/views/my-components/scroll-bar/vue-scroller-bars';
+    import scrollBar from './my-components/scroll-bar/vue-scroller-bars';
 
     export default {
         components: {
@@ -88,7 +88,8 @@
         data () {
             return {
                 shrink: false,
-                adminname: '',
+                adminname: this.$store.state.app.avatarImgPath,
+                avatarPath: '',
                 isFullScreen: false,
                 openedSubmenuArr: this.$store.state.app.openedSubmenuArr
             };
@@ -102,9 +103,6 @@
             },
             currentPath () {
                 return this.$store.state.app.currentPath; // 当前面包屑数组
-            },
-            avatorPath () {
-                return localStorage.avatorImgPath;
             },
             cachePage () {
                 return this.$store.state.app.cachePage;

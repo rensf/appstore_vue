@@ -12,7 +12,7 @@
                             <Row type="flex" class="user-info">
                                 <Col span="12">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
-                                        <img class="avator-img" :src="avatorPath"/>
+                                        <img class="avatar-img" :src="avatarPath"/>
                                     </Row>
                                 </Col>
                                 <Col span="12" style="padding-left:6px;">
@@ -253,13 +253,9 @@
                         name: '咖妃',
                         total: 1321
                     }
-                ]
+                ],
+                avatarPath: this.$store.state.app.avatarImgPath
             };
-        },
-        computed: {
-            avatorPath () {
-                return localStorage.avatorImgPath;
-            }
         },
         methods: {
             addNewToDoItem () {
