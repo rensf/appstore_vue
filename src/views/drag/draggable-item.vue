@@ -6,15 +6,15 @@
         itemBtns(h, element, index, parent) {
             const {copyItem, deleteItem} = this.$listeners;
             return [
-                <span class="drawing-item-copy" title="复制" onClick={event=>{
+                <span class="drawing-item-copy" title="复制" onClick={event =>{
                     copyItem(element, parent); event.stopPropagation()
                 }}>
-                    <Icon type="md-copy" />
+                    <Icon size="16" type="md-copy" />
                 </span>,
-                <span class="drawing-item-delete" title="删除" onClick={event=>{
+                <span class="drawing-item-delete" title="删除" onClick={event =>{
                     deleteItem(index, parent); event.stopPropagation()
                 }}>
-                    <Icon type="md-trash" />
+                    <Icon size="16" type="md-trash" />
                 </span>
             ];
         }
@@ -30,7 +30,7 @@
             return (
                 <Col span={element.span} class={className} nativeOnClick={ event => { activeItem(element); event.stopPropagation() }}>
                     <FormItem label-width={labelWidth} label={element.showLabel ? element.label : ''} required={element.required}>
-                        <render key={element.renderKey} conf={element} onInput={event=> {this.$set(element, 'defaultValue', event)}} />
+                        <render key={element.renderKey} conf={element} onInput={event => {this.$set(element, 'defaultValue', event)}} />
                     </FormItem>
                     {components.itemBtns.apply(this, arguments)}
                 </Col>
@@ -43,7 +43,7 @@
             if (element.type === 'flex') {
                 child = <Row type={element.type} justify={element.justify} align={element.align}>
                             {child}
-                         </Row>
+                        </Row>
             }
             return (
                 <Col span={element.span}>
