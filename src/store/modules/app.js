@@ -5,7 +5,7 @@ import {router} from '@/router/index';
 
 const app = {
     state: {
-        avatarImgPath: '',
+        avatarPath: '',
         cachePage: [],
         lang: '',
         isFullScreen: false,
@@ -134,7 +134,7 @@ const app = {
             state.currentPageName = name;
         },
         setAvatar (state, path) {
-            state.avatarImgPath = path;
+            state.avatarPath = path;
         },
         setMenuConfig (state, config) {
             localStorage.menuConfig = config;

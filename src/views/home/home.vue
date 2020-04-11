@@ -254,7 +254,7 @@
                         total: 1321
                     }
                 ],
-                avatarPath: this.$store.state.app.avatarImgPath
+                avatarPath: this.$store.state.app.avatarPath
             };
         },
         methods: {

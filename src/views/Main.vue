@@ -88,8 +88,8 @@
         data () {
             return {
                 shrink: false,
-                adminname: this.$store.state.app.avatarImgPath,
-                avatarPath: '',
+                adminname: this.$store.state.user.userInfo.adminname,
+                avatarPath: this.$store.state.app.avatarPath,
                 isFullScreen: false,
                 openedSubmenuArr: this.$store.state.app.openedSubmenuArr
             };
