@@ -25,7 +25,7 @@
                                     @click="addComponent(element)"
                                 >
                                     <div class="components-body">
-                                        <Icon :type="element.tagIcon" size="15"></Icon>
+                                        <Icons :type="element.tagIcon" size="15"></Icons>
                                         {{ element.label }}
                                     </div>
                                 </div>
@@ -63,17 +63,20 @@
                         </Form>
                     </Row>
                 </div>
+                <right-panel :active-data="activeData" />
             </div>
         </Card>
     </div>
 </template>
 
 <script>
+import Icons from "_c/icons/icons";
 import draggable from "vuedraggable";
 import { debounce } from "throttle-debounce";
-import { formConf, inputComponents } from "./config";
+import { formConf, inputComponents, selectComponents } from "./config";
 import drawingDefault from "./drawing-default";
 import DraggableItem from "./draggable-item";
+import RightPanel from "./right-panel";
 import {
     getDrawingList,
     saveDrawingList,
@@ -91,13 +94,17 @@ const idGlobal = getIdGlobal();
 export default {
     name: "drag",
     components: {
+        Icons,
         draggable,
-        DraggableItem
+        DraggableItem,
+        RightPanel
     },
     data() {
         return {
             formConf,
             idGlobal,
+            inputComponents,
+            selectComponents,
             drawingList: drawingDefault,
             activeId: drawingDefault[0].formId,
             activeData: drawingDefault[0],
@@ -107,6 +114,10 @@ export default {
                 {
                     title: "输入型组件",
                     list: inputComponents
+                },
+                {
+                    title: "选择型组件",
+                    list: selectComponents
                 }
             ]
         };
@@ -264,6 +275,10 @@ export default {
                 margin: 6px 2px;
             }
 
+            .components-draggable {
+                padding-bottom: 20px;
+            }
+
             .components-item {
                 display: inline-block;
                 width: 48%;
@@ -306,6 +321,12 @@ export default {
                 height: 100%;
                 position: relative;
 
+                .components-body {
+                    padding: 0;
+                    margin: 0;
+                    font-size: 0;
+                }
+
                 .sortable-ghost {
                     position: relative;
                     display: block;
@@ -322,7 +343,8 @@ export default {
                     }
                 }
 
-                .components-item .sortable-ghost {
+                .components-item.sortable-ghost {
+                    margin-bottom: 10px;
                     width: 100%;
                     height: 60px;
                     background-color: @selectedColor;
@@ -357,7 +379,7 @@ export default {
                         padding: 12px 10px;
                     }
                 }
-                
+
                 .drawing-row-item {
                     position: relative;
                     cursor: move;
@@ -370,7 +392,7 @@ export default {
                         margin-bottom: 2px;
                     }
                     /deep/ .ivu-col {
-                        margin-top: 22px;
+                        margin-bottom: 22px;
                     }
                     /deep/ .ivu-form-item {
                         margin-bottom: 0;
@@ -391,7 +413,7 @@ export default {
                         padding: 0 6px;
                     }
                 }
-                
+
                 .drawing-item,
                 .drawing-row-item {
                     &:hover {

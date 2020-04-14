@@ -8,6 +8,7 @@ import 'view-design/dist/styles/iview.css';
 import util from './libs/util';
 import {postRequest, getRequest, openUrl} from './api/api';
 import iviewArea from 'iview-area';
+import '@/assets/iconfont/iconfont.css';
 
 Vue.use(iView);
 Vue.use(iviewArea);

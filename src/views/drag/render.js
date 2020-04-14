@@ -1,4 +1,4 @@
-import {makeMap} from './util';
+import { makeMap } from './util';
 
 const isAttr = makeMap(
     'accept,accept-charset,accesskey,action,align,alt,async,autocomplete,'
@@ -25,12 +25,30 @@ function vModel(self, dataObject, defaultValue) {
 }
 
 const componentChild = {
-    'i-input': {
+    'Input': {
         prepend(h, conf, key) {
             return <template slot="prepend">{conf[key]}</template>
         },
         append(h, conf, key) {
             return <template slot="append">{conf[key]}</template>
+        }
+    },
+    'Select': {
+        options(h, conf, key) {
+            const list = []
+            conf.options.forEach(item => {
+                list.push(<Option label={item.label} value={item.value} disabled={item.disabled}></Option>)
+            })
+            return list
+        }
+    },
+    'RadioGroup': {
+        options(h, conf, key) {
+            const list = []
+            conf.options.forEach(item => {
+                list.push(<Radio label={item.value} border={conf.border}>{item.label}</Radio>)
+            })
+            return list
         }
     }
 }
