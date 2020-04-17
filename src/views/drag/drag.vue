@@ -63,7 +63,12 @@
                         </Form>
                     </Row>
                 </div>
-                <right-panel :active-data="activeData" />
+                <right-panel
+                    :active-data="activeData"
+                    :formConf="formConf"
+                    :show-field="!!drawingList.length"
+                    @tag-change="tagChange"
+                />
             </div>
         </Card>
     </div>
@@ -178,8 +183,7 @@ export default {
             if (!clone.layout) clone.layout = "colFormItem";
             if (clone.layout === "colFormItem") {
                 clone.vModel = `field${this.idGlobal}`;
-                clone.placeholder !== undefined &&
-                    (clone.placeholder += clone.label);
+                clone.placeholder !== undefined && clone.placeholder;
                 tempActiveData = clone;
             } else if (clone.layout === "rowFormItem") {
                 delete clone.label;
@@ -217,7 +221,38 @@ export default {
                 if (len) {
                     this.activeFormItem(this.drawingList[len - 1]);
                 }
+                console.log(88888888888888888888888)
             });
+        },
+        tagChange(newTag) {
+            newTag = this.cloneComponent(newTag);
+            newTag.vModel = this.activeData.vModel;
+            newTag.formId = this.activeId;
+            newTag.span = this.activeData.span;
+            delete this.activeData.tag;
+            delete this.activeData.tagIcon;
+            delete this.activeData.document;
+            Object.keys(newTag).forEach(key => {
+                if (
+                    this.activeData[key] !== undefined &&
+                    typeof this.activeData[key] === typeof newTag[key]
+                ) {
+                    newTag[key] = this.activeData[key];
+                }
+            });
+            this.activeData = newTag;
+            this.updateDrawingList(newTag, this.drawingList);
+        },
+        updateDrawingList(newTag, list) {
+            const index = list.findIndex(item => item.formId === this.activeId);
+            if (index > -1) {
+                list.splice(index, 1, newTag);
+            } else {
+                list.forEach(item => {
+                    if (Array.isArray(item.children))
+                        this.updateDrawingList(newTag, item.children);
+                });
+            }
         }
     },
     mounted() {

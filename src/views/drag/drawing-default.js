@@ -5,7 +5,7 @@ export default [
     label: '手机号',
     vModel: 'mobile',
     formId: 6,
-    tag: 'i-input',
+    tag: 'Input',
     placeholder: '请输入手机号',
     defaultValue: '',
     span: 24,

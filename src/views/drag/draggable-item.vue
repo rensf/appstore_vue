@@ -4,7 +4,7 @@
 
     const components = {
         itemBtns(h, element, index, parent) {
-            const {copyItem, deleteItem} = this.$listeners;
+            const { copyItem, deleteItem } = this.$listeners
             return [
                 <span class="drawing-item-copy" title="复制" onClick={event =>{
                     copyItem(element, parent); event.stopPropagation()
@@ -89,6 +89,7 @@
         ],
         render(h) {
             const layout = layouts[this.element.layout]
+            console.log("!!!!!!!!!!!!!!!!!!" + layout)
             if (layout) {
                 return layout.call(this, h, this.element, this.index, this.drawingList)
             }

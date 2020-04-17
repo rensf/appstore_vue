@@ -124,16 +124,15 @@
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
                 this.adminname = this.$store.state.user.userInfo.adminname;
-                this.postRequest("/message/readMessage", {flag : 1,staffid : this.$store.state.user.userInfo.adminid}).then(response => {
-                  let unread = response.data.result.resultlist;
-                   if (unread !== null){
-                      let messageCount = unread.length;
-                      this.messageCount = messageCount.toString();
-                      this.checkTag(this.$route.name);
-                      this.$store.commit('setMessageCount', unread.length);
-                   }
-                })
-
+                // this.postRequest("/message/readMessage", {flag : 1,staffid : this.$store.state.user.userInfo.adminid}).then(response => {
+                //   let unread = response.data.result.resultlist;
+                //    if (unread !== null){
+                //       let messageCount = unread.length;
+                //       this.messageCount = messageCount.toString();
+                //       this.checkTag(this.$route.name);
+                //       this.$store.commit('setMessageCount', unread.length);
+                //    }
+                // })
             },
             toggleClick () {
                 this.shrink = !this.shrink;

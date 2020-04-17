@@ -91,11 +91,11 @@ util.setCurrentPath = function (vm, name) {
             path: '/home',
             name: 'home_index'
         },
-            {
-                title: title,
-                path: '',
-                name: name
-            }
+        {
+            title: title,
+            path: '',
+            name: name
+        }
         ];
     } else {
         let currentPathObj = vm.$store.state.app.routers.filter(item => {
@@ -126,11 +126,11 @@ util.setCurrentPath = function (vm, name) {
                 path: '/home',
                 name: 'home_index'
             },
-                {
-                    title: currentPathObj.title,
-                    path: '',
-                    name: name
-                }
+            {
+                title: currentPathObj.title,
+                path: '',
+                name: name
+            }
             ];
         } else {
             let childObj = currentPathObj.children.filter((child) => {
@@ -141,16 +141,16 @@ util.setCurrentPath = function (vm, name) {
                 path: '/home',
                 name: 'home_index'
             },
-                {
-                    title: currentPathObj.title,
-                    path: '',
-                    name: currentPathObj.name
-                },
-                {
-                    title: childObj.title,
-                    path: currentPathObj.path + '/' + childObj.path,
-                    name: name
-                }
+            {
+                title: currentPathObj.title,
+                path: '',
+                name: currentPathObj.name
+            },
+            {
+                title: childObj.title,
+                path: currentPathObj.path + '/' + childObj.path,
+                name: name
+            }
             ];
         }
     }
@@ -360,6 +360,10 @@ util.formatDate = function (time) {
     let minute = date.getMinutes();
     let second = date.getSeconds();
     return year + '/' + month + '/' + day + '  ' + hour + ':' + minute + ':' + second;
+};
+
+util.isNumberStr = function (str) {
+    return /^[+-]?(0|([1-9]\d*))(\.\d+)?$/g.test(str);
 };
 
 export default util;

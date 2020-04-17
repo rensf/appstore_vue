@@ -33,6 +33,20 @@ module.exports = {
         config.resolve.alias
             .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
             .set('_c', resolve('src/components'));
+        /**
+         * 统一 View UI（iView） 标签书写规范，所有标签都可以使用首字母大写的形式，包括 Vue 限制的两个标签 Switch 和 Circle。
+         */
+        config.module
+            .rule('vue')
+            .test(/\.vue$/)
+            .use('iview-loader')
+            .loader('iview-loader')
+            .tap(() => {
+                return {
+                    prefix: false
+                }
+            })
+            .end();
     },
     // 设为false打包时不生成.map文件
     productionSourceMap: false,
@@ -41,7 +55,7 @@ module.exports = {
         proxy: {
             '/api': {
                 target: 'http://127.0.0.1:8082',
-                pathRewrite: {'^/api': 'http://127.0.0.1:8082'},
+                pathRewrite: { '^/api': 'http://127.0.0.1:8082' },
                 changeOrigin: true
             }
         }

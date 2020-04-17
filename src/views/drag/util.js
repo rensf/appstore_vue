@@ -49,3 +49,7 @@ export function getFormConf() {
     if (str) return JSON.parse(str)
     return null
 }
+
+export function saveFormConf(obj) {
+    localStorage.setItem(FORM_CONF, JSON.stringify(obj))
+  }  

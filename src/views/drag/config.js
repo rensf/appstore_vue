@@ -1,5 +1,6 @@
 export const formConf = {
-    formRef: 'elForm',
+    formName: '表单',
+    formRef: 'Form',
     formModel: 'formData',
     labelPosition: 'right',
     labelWidth: 100,
@@ -28,9 +29,8 @@ export const inputComponents = [
         maxlength: null,
         'show-word-limit': false,
         readonly: false,
-        disable: false,
+        disabled: false,
         required: true,
-        regList: [],
         changeTag: true
     },
     {
@@ -51,9 +51,8 @@ export const inputComponents = [
         maxlength: null,
         'show-word-limit': false,
         readonly: false,
-        disable: false,
+        disabled: false,
         required: true,
-        regList: [],
         changeTag: true
     },
     {
@@ -75,9 +74,8 @@ export const inputComponents = [
         maxlength: null,
         'show-word-limit': false,
         readonly: false,
-        disable: false,
+        disabled: false,
         required: true,
-        regList: [],
         changeTag: true
     }
 ];
@@ -105,7 +103,6 @@ export const selectComponents = [
             label: '选项二',
             value: 2
         }],
-        regList: [],
         changeTag: true
     },
     {
@@ -117,8 +114,6 @@ export const selectComponents = [
         showLabel: true,
         labelWidth: null,
         style: {},
-        optionType: 'default',
-        border: false,
         disabled: false,
         required: true,
         options: [{
@@ -128,19 +123,63 @@ export const selectComponents = [
             label: '选项二',
             value: 2
         }],
-        regList: [],
-        changeTag: true,
+        changeTag: true
     },
-    // {
-    //     label: '复选框',
-    //     tag: 'i-checkbox',
-    //     tagIcon: 'md-create',
-    // },
-    // {
-    //     label: '时间选择',
-    //     tag: 'i-date-picker',
-    //     tagIcon: 'md-create',
-    // },
+    {
+        label: '复选框',
+        tag: 'CheckboxGroup',
+        tagIcon: 'checkbox',
+        defaultValue: [],
+        span: 24,
+        showLabel: true,
+        labelWidth: null,
+        style: {},
+        disabled: false,
+        required: true,
+        options: [{
+            label: '选项一',
+            value: 1
+        }, {
+            label: '选项二',
+            value: 2
+        }],
+        changeTag: true
+    },
+    {
+        label: '日期选择',
+        tag: 'DatePicker',
+        tagIcon: 'date',
+        type: 'date',
+        placeholder: '请选择',
+        defaultValue: null,
+        span: 24,
+        showLabel: true,
+        labelWidth: null,
+        style: { width: '100%' },
+        clearable: true,
+        disabled: false,
+        required: true,
+        format: 'yyyy-MM-dd',
+        readonly: false,
+        changeTag: true
+    },
+    {
+        label: '时间选择',
+        tag: 'TimePicker',
+        tagIcon: 'time',
+        type: 'time',
+        placeholder: '请选择',
+        defaultValue: null,
+        span: 24,
+        showLabel: true,
+        labelWidth: null,
+        style: { width: '100%' },
+        clearable: true,
+        disabled: false,
+        required: true,
+        readonly: false,
+        changeTag: true
+    }
     // {
     //     label: '文件上传',
     //     tag: 'i-upload',

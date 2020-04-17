@@ -1,4 +1,5 @@
 import { makeMap } from './util';
+import { Checkbox } from 'view-design';
 
 const isAttr = makeMap(
     'accept,accept-charset,accesskey,action,align,alt,async,autocomplete,'
@@ -17,7 +18,9 @@ const isAttr = makeMap(
 )
 
 function vModel(self, dataObject, defaultValue) {
-    dataObject.props.value = defaultValue
+    if (dataObject.props.tag !== 'DatePicker') {
+        dataObject.props.value = defaultValue
+    }
 
     dataObject.on.input = val => {
         self.$emit('input', val)
@@ -46,7 +49,16 @@ const componentChild = {
         options(h, conf, key) {
             const list = []
             conf.options.forEach(item => {
-                list.push(<Radio label={item.value} border={conf.border}>{item.label}</Radio>)
+                list.push(<Radio label={item.value}>{item.label}</Radio>)
+            })
+            return list
+        }
+    },
+    'CheckboxGroup': {
+        options(h, conf, key) {
+            const list = []
+            conf.options.forEach(item => {
+                list.push(<Checkbox label={item.value}>{item.label}</Checkbox>)
             })
             return list
         }
@@ -74,6 +86,13 @@ export default {
             })
         }
 
+        /**
+         * iview Select 有个label属性阻碍placeholder出现
+         */
+        if (confClone.tag === 'Select') {
+            delete confClone.label
+        }
+
         Object.keys(confClone).forEach(key => {
             const val = confClone[key]
             if (key === 'vModel') {
@@ -86,6 +105,7 @@ export default {
                 dataObject.attrs[key] = val
             }
         })
+
         return h(this.conf.tag, dataObject, children)
     },
     props: ['conf']
