@@ -89,7 +89,6 @@
         ],
         render(h) {
             const layout = layouts[this.element.layout]
-            console.log("!!!!!!!!!!!!!!!!!!" + layout)
             if (layout) {
                 return layout.call(this, h, this.element, this.index, this.drawingList)
             }

@@ -27,7 +27,7 @@
     "sortablejs": "^1.7.0",
     "throttle-debounce": "^2.1.0",
     "tinymce": "^4.7.4",
-    "view-design": "^4.0.2",
+    "view-design": "^4.2.0",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
     "vue-virtual-scroller": "^0.10.6",

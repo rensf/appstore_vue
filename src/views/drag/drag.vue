@@ -59,7 +59,7 @@
                                     @deleteItem="drawingItemDelete"
                                 />
                             </draggable>
-                            <div v-show="!drawingList.length" class="empty-info">从左侧拖入或点选组件进行表单设计</div>
+                            <Col v-show="!drawingList.length" class="empty-info">从左侧拖入或点选组件进行表单设计</Col>
                         </Form>
                     </Row>
                 </div>
@@ -221,7 +221,6 @@ export default {
                 if (len) {
                     this.activeFormItem(this.drawingList[len - 1]);
                 }
-                console.log(88888888888888888888888)
             });
         },
         tagChange(newTag) {
