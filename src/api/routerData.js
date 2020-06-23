@@ -28,20 +28,5 @@ export default [
                 'component': 'application/application'
             }
         ]
-    },
-    {
-        'path': '/drag',
-        'icon': 'md-attach',
-        'title': '自定义表单（可拖拽）',
-        'name': 'drag',
-        'component': 'Main',
-        'children': [
-            {
-                'path': 'drag',
-                'title': '自定义表单（可拖拽）',
-                'name': 'drag',
-                'component': 'drag/drag'
-            }
-        ]
     }
 ];

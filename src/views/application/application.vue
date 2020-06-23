@@ -171,6 +171,7 @@
                         title: 'APP描述',
                         align: 'center',
                         key: 'appdetail',
+                        tooltip: true,
                         width: 300
                     },
                     {
