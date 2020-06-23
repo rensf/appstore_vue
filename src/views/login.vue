@@ -63,7 +63,7 @@
                             //初始化路由
                             // this.util.initRouter(this);
                             this.$store.commit('setUserInfo', response.data.result);
-                            this.$store.commit('setAvatar', 'head.jpg');
+                            this.$store.commit('setAvatar', '/api/td-sys-user/previewHeadurl/head.jpg');
                             this.$router.push({
                                 name: 'home_index'
                             });
