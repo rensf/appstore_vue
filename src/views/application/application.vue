@@ -94,6 +94,7 @@
                 :headers="{token: token}"
                 accept=".jpg, .jpeg, .png"
                 :format="['jpg','jpeg','png']"
+                :upload-height="150"
                 icon="md-add"
                 @upload-success="uploadAppimage"
               ></Upload-File>
@@ -181,6 +182,12 @@ export default {
           width: 300
         },
         {
+          title: "APP状态",
+          align: "center",
+          key: "appstate",
+          width: 100,
+        },
+        {
           title: "下载量",
           align: "center",
           key: "appdown",
@@ -195,10 +202,12 @@ export default {
               h(
                 "Button",
                 {
-                  props: { type: "success", size: "small" },
+                  props: { type: "success", size: "small", disabled: params.row.appstate !== '已下架' },
                   style: { margin: "0 3px" },
                   on: {
-                    click: () => {}
+                    click: () => {
+
+                    }
                   }
                 },
                 "上架"
@@ -206,10 +215,12 @@ export default {
               h(
                 "Button",
                 {
-                  props: { type: "warning", size: "small" },
+                  props: { type: "warning", size: "small", disabled: params.row.appstate !== '已上架' },
                   style: { margin: "0 3px" },
                   on: {
-                    click: () => {}
+                    click: () => {
+
+                    }
                   }
                 },
                 "下架"

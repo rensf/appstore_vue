@@ -10,33 +10,27 @@
              v-for="item in imgList">
             <img :src="item.url"/>
         </div>
+        <Input v-if="!showList" class="upload-input" v-model="value"/>
         <Upload
                 class="upload-file"
                 :style="{width: uploadWidth + 'px'}"
-                :type="type"
-                :max-size="maxSize"
-                :multiple="multiple"
-                :action="action"
-                :headers="headers"
-                :data="data"
-                :accept="accept"
-                :format="format"
-                :show-upload-list="showUploadList"
+                v-bind="$attrs"
+                v-on="$listeners"
                 :before-upload="handleBeforeUpload"
                 :on-format-error="handleFormatError"
                 :on-exceeded-size="handleMaxSize"
                 :on-success="uploadSuccess"
         >
-            <Icon :style="{height: uploadHeight + 'px', lineHeight: uploadHeight + 'px'}" :type="icon"></Icon>
-            <span>{{text}}</span>
+            <Icon v-if="showList" :style="{height: uploadHeight + 'px', lineHeight: uploadHeight + 'px'}" :type="icon"></Icon>
+            <Button v-else :icon="icon">{{text}}</Button>
         </Upload>
-        <Input v-if="!showList" class="upload-input" v-model="value"/>
     </div>
 </template>
 
 <script>
     export default {
         name: 'upload-file',
+        inheritAttrs: false,
         props: {
             showList: {
                 type: Boolean,
@@ -46,40 +40,8 @@
                 type: Array
             },
             value: '',
-            type: {
-                type: String,
-                default: 'select'
-            },
-            maxSize: {
-                type: Number
-            },
             maxLength: {
                 type: Number
-            },
-            multiple: {
-                type: Boolean,
-                default: false
-            },
-            action: '',
-            headers: {
-                type: Object,
-                default: () => {
-                }
-            },
-            data: {
-                type: Object,
-                default: () => {
-                }
-            },
-            accept: '',
-            format: {
-                type: Array,
-                default: () => {
-                }
-            },
-            showUploadList: {
-                type: Boolean,
-                default: false
             },
             uploadWidth: {
                 type: String,
